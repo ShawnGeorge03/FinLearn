@@ -1,0 +1,67 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "client",
+			"label": "Setup Client",
+			"detail": "npm: install - Client",
+			"presentation": {
+				"echo": true,
+				"clear": true,
+				"reveal": "always",
+				"group": "Setup",
+				"close": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "install",
+			"path": "server",
+			"label": "Setup Server",
+			"detail": "npm: install - Server",
+			"presentation": {
+				"echo": true,
+				"clear": true,
+				"reveal": "always",
+				"group": "Setup",
+				"close": true
+			}
+		},
+		{
+			"label": "Setup",
+			"dependsOn": [
+				"Setup Server",
+				"Setup Client"
+			],
+			"dependsOrder": "parallel",
+			"problemMatcher": []
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"path": "client",
+			"label": "Start Client",
+			"detail": "next dev",
+			"group": "build"
+		},
+		{
+			"type": "npm",
+			"script": "dev",
+			"path": "server",
+			"label": "Start Server",
+			"detail": "nodemon ./src/server.js",
+			"group": "build"
+		},
+		{
+			"label": "Start Dev",
+			"dependsOn": [
+				"Start Server",
+				"Start Client"
+			],
+			"dependsOrder": "parallel",
+			"problemMatcher": []
+		}
+	]
+}

@@ -1,0 +1,21 @@
+{
+    "recommendations": [
+        "deque-systems.vscode-axe-linter",
+        "adpyke.codesnap",
+        "vivaxy.vscode-conventional-commits",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "visualstudioexptteam.vscodeintellicode",
+        "visualstudioexptteam.intellicode-api-usage-examples",
+        "ms-vsliveshare.vsliveshare",
+        "davidanson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "shardulm94.trailing-spaces",
+        "salbert.comment-ts",
+        "magssch.react-typescript-boilerplate"
+    ],
+    "unwantedRecommendations": [
+        "kimlimjustin.jsdoc-generator"
+    ]
+}
