@@ -1,0 +1,13 @@
+{
+  "singleQuote": true,
+  "bracketSameLine": true,
+  "singleAttributePerLine": true,
+  "overrides": [
+    {
+      "files": ["package.json", "tsconfig.json", ".eslintrc.json"],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
+}

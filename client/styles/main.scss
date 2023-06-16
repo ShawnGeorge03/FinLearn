@@ -1,0 +1,16 @@
+@import 'abstracts/variables', 'abstracts/functions', 'abstracts/mixins',
+  'abstracts/placeholders';
+
+@import 'base/typography';
+
+* {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-decoration: none !important;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}

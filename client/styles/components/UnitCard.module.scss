@@ -1,0 +1,35 @@
+@import '../abstracts/mixins';
+
+.unitHeader {
+  padding: 5%;
+}
+
+.contentWrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 1em;
+}
+
+@include geq(420px) {
+  .unitHeader {
+    padding: 3%;
+  }
+}
+
+@include geq(1000px) {
+  .contentWrapper {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+@include geq(1500px) {
+  .contentWrapper {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+}
+
+@include geq(1680px) {
+  .contentWrapper {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+}

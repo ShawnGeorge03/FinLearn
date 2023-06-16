@@ -1,0 +1,63 @@
+<mxfile host="Electron" modified="2023-06-16T22:25:13.728Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.3.7 Chrome/112.0.5615.204 Electron/24.5.0 Safari/537.36" etag="LjunhnfRwFA3yY7LQZA4" version="21.3.7" type="device">
+  <diagram name="Page-1" id="R9KI34Z9G4Qu3Kwwxy6v">
+    <mxGraphModel dx="1710" dy="1238" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="iIY1QTV5WG3atDdcucgK-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="iIY1QTV5WG3atDdcucgK-2" target="iIY1QTV5WG3atDdcucgK-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-18" value="HTTP Request" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="iIY1QTV5WG3atDdcucgK-17">
+          <mxGeometry x="-0.1826" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-2" value="Client" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="280" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-6" value="Desktop" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-2">
+          <mxGeometry x="10" y="140" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-7" value="Next/React" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-2">
+          <mxGeometry x="10" y="90" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-10" value="JS / HTML/ CSS" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-2">
+          <mxGeometry x="10" y="40" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-19" value="Request Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" parent="1" source="iIY1QTV5WG3atDdcucgK-3" target="iIY1QTV5WG3atDdcucgK-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-21" value="HTML Response" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="iIY1QTV5WG3atDdcucgK-3" target="iIY1QTV5WG3atDdcucgK-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-3" value="Server" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="325" y="280" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-11" value="Node" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-3">
+          <mxGeometry x="10" y="90" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-12" value="Express" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-3">
+          <mxGeometry x="10" y="40" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-13" value="Application Server" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-3">
+          <mxGeometry x="10" y="140" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-20" value="MongoDB Data" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="iIY1QTV5WG3atDdcucgK-4" target="iIY1QTV5WG3atDdcucgK-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-4" value="Database" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="280" width="200" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-14" value="Database Server" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-4">
+          <mxGeometry x="10" y="140" width="180" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-15" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-4">
+          <mxGeometry x="30" y="40" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="iIY1QTV5WG3atDdcucgK-16" value="MongoDB Atlas" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="iIY1QTV5WG3atDdcucgK-4">
+          <mxGeometry x="110" y="60" width="80" height="40" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

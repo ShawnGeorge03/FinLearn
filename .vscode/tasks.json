@@ -62,6 +62,43 @@
 			],
 			"dependsOrder": "parallel",
 			"problemMatcher": []
-		}
+		},
+		{
+			"type": "npm",
+			"script": "format",
+			"path": "client",
+			"label": "Format Client",
+			"detail": "npm: format - Client",
+			"presentation": {
+				"echo": true,
+				"clear": true,
+				"reveal": "always",
+				"group": "Format",
+				"close": true
+			}
+		},
+		{
+			"type": "npm",
+			"script": "format",
+			"path": "server",
+			"label": "Format Server",
+			"detail": "npm: format - Server",
+			"presentation": {
+				"echo": true,
+				"clear": true,
+				"reveal": "always",
+				"group": "Format",
+				"close": true
+			}
+		},
+		{
+			"label": "Format",
+			"dependsOn": [
+				"Format Server",
+				"Format Client"
+			],
+			"dependsOrder": "parallel",
+			"problemMatcher": []
+		},
 	]
 }

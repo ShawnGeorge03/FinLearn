@@ -53,13 +53,15 @@ The `client` folder contains the Frontend of the App built using Next.js and Rea
 
 2. If you are not using **VS Code** then follow these steps
 
-   ```bash
-   cd client
-   npm install
+    ```bash
+    cd client
+    npm install
+    ```
 
-   cd ../server
-   npm install
-   ```
+    ```bash
+    cd ../server
+    npm install
+    ```
 
 3. If you are using **VS Code** then follow these steps
     1. Open the Command Palette using `Ctrl+Shift+P` or `Cmd+Shift+P`
@@ -67,7 +69,27 @@ The `client` folder contains the Frontend of the App built using Next.js and Rea
     3. Search for `Setup` and select it
     4. VS Code will automatically install all the packages and close the shells.
 
-4. After registering for MongoDB Account request for `MONGO_URI` from [Shashwat Piyush Doshi](https://github.com/shashwat-doshi)
+4. Create a `.env` file inside the `server` folder and copy the following
+
+    ```bash
+    PORT=4000
+    MONGO_URI='Request Shashwat Piyush Doshi'
+    ```
+    
+5. Create a `.env` file inside the `client` folder and copy the following
+
+    ```bash
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY='Retrieve through Clerk Dashboard'
+    CLERK_SECRET_KEY='Retrieve through Clerk Dashboard'
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/dashboard
+    ```
+
+
+5. To get access to the database register for a MongoDB Account and send
+  [Shashwat Piyush Doshi](https://github.com/shashwat-doshi) your account email
 
 ### Start
 
