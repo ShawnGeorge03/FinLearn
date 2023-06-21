@@ -104,7 +104,7 @@ Goals when using the system
 
 - 0 marks = No personas provided
 
-Your mark: 1
+Your mark: 3
 
 > You needed to include personas for [Q2](https://github.com/CSCC012023/final-project-s23-agile-avengers/blob/main/doc/sprint0/product.md#q2-who-are-your-target-users-2-3-personas). You only listed them.
 
@@ -128,7 +128,7 @@ Your mark: 2
 
 - 0 marks = No writing or poor quality
 
-Your mark: 1
+Your mark: 2
 
 > Not complete persona
 
@@ -182,7 +182,7 @@ Your mark: 2
 
 - 0 marks = Not completed
 
-Your mark: \_
+Your mark: 2
 
 - Meetings (max 2 marks)
 
@@ -204,7 +204,7 @@ Your mark: 2
 
 Your mark: 2
 
-product.md Total Mark: 30 / 36
+product.md Total Mark: 33 / 36
 
 ---
 
@@ -361,4 +361,4 @@ Presentation quality Total Mark: 3 / 3
 
 ## Total Mark
 
-49 / 57
+52 / 57
