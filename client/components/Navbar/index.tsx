@@ -1,22 +1,22 @@
 'use client';
 
+import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
   Flex,
   HStack,
   IconButton,
-  useDisclosure,
-  Stack,
   Image,
   Link,
+  Stack,
+  useDisclosure,
 } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
 import NavLink from './NavLink';
 
-import style from '@/styles/components/Navbar.module.scss';
 import logoImg from '@/public/Logo_Transparent_Dark.png';
-import UserAvatar from './UserAvatar';
+import style from '@/styles/components/Navbar.module.scss';
 import NextLink from 'next/link';
+import UserAvatar from './UserAvatar';
 
 import { useAuth } from '@clerk/nextjs';
 
@@ -40,37 +40,37 @@ const Navbar = () => {
       bg="brand.gray"
       px={4}>
       <Flex
-        h={16}
         alignItems={'center'}
+        h={16}
         justifyContent={'space-between'}>
         <IconButton
-          size={'md'}
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           aria-label={'Open Menu'}
           display={{ md: 'none' }}
+          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           onClick={isOpen ? onClose : onOpen}
+          size={'md'}
         />
         <HStack
-          spacing={8}
-          alignItems={'center'}>
+          alignItems={'center'}
+          spacing={8}>
           <Link
             as={NextLink}
             href="/">
             <Image
+              alt="Logo"
               className={style.logo}
               src={logoImg.src}
-              alt="Logo"
             />
           </Link>
           {isSignedIn && (
             <HStack
               as={'nav'}
-              spacing={4}
-              display={{ base: 'none', md: 'flex' }}>
+              display={{ base: 'none', md: 'flex' }}
+              spacing={4}>
               {navLinks.map((link) => (
                 <NavLink
-                  key={link.name}
                   href={link.href}
+                  key={link.name}
                   name={link.name}
                 />
               ))}
@@ -84,15 +84,15 @@ const Navbar = () => {
 
       {isOpen ? (
         <Box
-          pb={4}
-          display={{ md: 'none' }}>
+          display={{ md: 'none' }}
+          pb={4}>
           <Stack
             as={'nav'}
             spacing={4}>
             {navLinks.map((link) => (
               <NavLink
-                key={link.name}
                 href={link.href}
+                key={link.name}
                 name={link.name}
               />
             ))}

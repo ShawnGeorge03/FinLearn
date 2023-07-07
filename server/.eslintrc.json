@@ -1,0 +1,68 @@
+{
+  "env": {
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "google",
+    "prettier"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    // Best practices
+    "curly": ["error", "multi"],
+    "default-param-last": "error",
+    "dot-notation": "error",
+    "new-cap": [
+      "error",
+      {
+        "capIsNewExceptionPattern": "Router"
+      }
+    ],
+    "no-console": ["error", { "allow": ["warn", "error", "info"] }],
+    "no-duplicate-imports": "error",
+    "no-self-assign": "error",
+    "no-self-compare": "error",
+    "no-else-return": "error",
+    "no-template-curly-in-string": "error",
+    "no-var": "error",
+    // Stylistic
+    "array-bracket-spacing": "error",
+    "computed-property-spacing": ["error", "never"],
+    "no-lonely-if": "error",
+    "no-unneeded-ternary": "error",
+    // ES6
+    "prefer-arrow-callback": "warn",
+    "prefer-const": "warn",
+    "prefer-destructuring": "warn",
+    "require-await": "error",
+    "require-jsdoc": [
+      "warn",
+      {
+        "require": {
+          "FunctionDeclaration": true,
+          "MethodDefinition": false,
+          "ClassDeclaration": false,
+          "ArrowFunctionExpression": true,
+          "FunctionExpression": false
+        }
+      }
+    ],
+    "yoda": ["error", "never", { "onlyEquality": true }],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          "Boolean": false,
+          "Number": false,
+          "String": false
+        }
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "off"
+  }
+}

@@ -1,0 +1,51 @@
+name: CI
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+      - releases/**
+  push:
+    branches:
+      - main
+permissions: write-all
+env:
+  NODE_VERSION: 18
+jobs:
+  lint:
+    name: Run Linter
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: '${{ github.head_ref }}'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Linting Code
+        run: npm run lint --workspaces
+  format:
+    name: Run Prettier
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Run Prettier
+        run: npx prettier --config .prettierrc --ignore-path .prettierignore -u --write .
+
+      - name: Commit Format Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: 'style: 🎨 Formatted Client & Server Code'
+          branch: ${{ github.head_ref }}

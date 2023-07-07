@@ -1,27 +1,23 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import ArticleImage from '@/components/ContentArticle/ArticleImage';
+import BlogAuthor from '@/components/ContentArticle/BlogAuthor';
+import SidePaneItem from '@/components/ContentVideo/SidePaneItem';
+import styles from '@/styles/pages/Article.module.scss';
 import { Article } from '@/types/learning';
 import {
+  Accordion,
   Box,
-  Heading,
-  Link,
-  Image,
-  Text,
+  Container,
   Divider,
-  HStack,
-  Tag,
+  Heading,
+  Spinner,
+  Text,
+  VStack,
   Wrap,
   WrapItem,
-  Accordion,
-  Container,
-  VStack,
-  Spinner,
 } from '@chakra-ui/react';
-import BlogAuthor from '@/components/ContentArticle/BlogAuthor';
-import ArticleImage from '@/components/ContentArticle/ArticleImage';
-import styles from '@/styles/pages/Course.module.scss';
-import SidePaneItem from '@/components/ContentVideo/SidePaneItem';
+import { useEffect, useState } from 'react';
 import { Course } from '../../page';
 
 type ArticleProps = {
@@ -43,13 +39,13 @@ const ArticleList = ({ params }: ArticleProps) => {
       const dataCourse: Course = await responseCourse.json();
       // update to better promise handling
       const response: Response = await fetch(
-        `http://localhost:4000/articles?articleSlug=${params.articleSlug}`,
+        `http://localhost:4000/article?articleSlug=${params.articleSlug}`,
       );
       setCourse(dataCourse);
       const jsonData: any = await response.json();
       setArticle(jsonData.article);
-    } catch (e: any) {
-      console.error(e.message);
+    } catch (error) {
+      console.error((error as Error).message);
     }
   };
 
@@ -65,10 +61,10 @@ const ArticleList = ({ params }: ArticleProps) => {
           {course?.units.map(({ name, contents }, unitKey) => {
             return (
               <SidePaneItem
-                key={unitKey}
                 contents={contents}
-                name={name}
                 courseSlug={params?.courseSlug as string}
+                key={unitKey}
+                name={name}
               />
             );
           })}
@@ -76,14 +72,14 @@ const ArticleList = ({ params }: ArticleProps) => {
       </div>
       {article == undefined ? (
         <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-          marginTop="240"
-          justifyContent="center"
           alignSelf="center"
+          color="blue.500"
+          emptyColor="gray.200"
+          justifyContent="center"
+          marginTop="240"
+          size="xl"
+          speed="0.65s"
+          thickness="4px"
         />
       ) : (
         <Container maxW={'7xl'}>
@@ -91,15 +87,15 @@ const ArticleList = ({ params }: ArticleProps) => {
 
           <Box>
             <BlogAuthor
-              name={String(article.author)}
               date={String(article.createdAt)}
+              name={String(article.author)}
             />
           </Box>
 
           <Divider marginTop="5" />
           <Wrap
-            spacing="30px"
-            marginTop="5">
+            marginTop="5"
+            spacing="30px">
             <WrapItem width={{ base: '100%', sm: '45%', md: '45%', lg: '30%' }}>
               <Box w="100%">
                 <ArticleImage image={article.image} />
@@ -107,9 +103,9 @@ const ArticleList = ({ params }: ArticleProps) => {
             </WrapItem>
           </Wrap>
           <VStack
+            alignItems="flex-start"
             paddingTop="20px"
-            spacing="2"
-            alignItems="flex-start">
+            spacing="2">
             <Text fontSize="lg">{article?.articleText} </Text>
           </VStack>
         </Container>

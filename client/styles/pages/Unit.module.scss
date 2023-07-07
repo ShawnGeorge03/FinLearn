@@ -1,0 +1,84 @@
+@import '../abstracts/mixins';
+
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 2vh;
+  padding-bottom: 10vh;
+
+  .header {
+    padding-bottom: 5vh;
+
+    .title {
+      font-style: normal;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 0.3px;
+      color: #000000;
+      padding-top: 2vh;
+    }
+  }
+
+  .unitWrapper {
+    display: none;
+  }
+
+  .contentWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+
+    .content {
+      display: flex;
+      gap: 0.5em;
+      align-items: center;
+    }
+  }
+}
+
+@include geq(700px) {
+  .container {
+    display: grid;
+    grid-template-rows: 0.5fr;
+    gap: 0px 3vh;
+    grid-template-areas:
+      'a b'
+      'a c';
+    transition: width 1s ease-in-out;
+
+    > .unitWrapper {
+      display: block;
+      padding-top: 2vh;
+      grid-area: a;
+    }
+
+    > .header {
+      grid-area: b;
+
+      .progress {
+        max-width: 75%;
+      }
+    }
+
+    > .contentWrapper {
+      grid-area: c;
+    }
+  }
+}
+
+@include geq(1050px) {
+  .container {
+    grid-template-columns: 0.5fr;
+  }
+}

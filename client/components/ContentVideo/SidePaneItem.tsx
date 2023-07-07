@@ -1,7 +1,7 @@
 import {
-  AccordionItem,
   AccordionButton,
   AccordionIcon,
+  AccordionItem,
   AccordionPanel,
   Box,
   Link,
@@ -38,11 +38,11 @@ const SidePaneItem = ({ name, contents, courseSlug }: SidePaneItemProp) => {
         {contents.map(({ name, slug, contentType }, contentKey) => {
           return (
             <Link
-              key={contentKey}
-              href={`/learning/${courseSlug}/${contentType}/${slug}`}>
+              href={`/learning/${courseSlug}/${contentType}/${slug}`}
+              key={contentKey}>
               <Text
-                size="sm"
-                marginTop="10">
+                marginTop="10"
+                size="sm">
                 {name}
               </Text>
             </Link>

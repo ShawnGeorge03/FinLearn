@@ -1,0 +1,25 @@
+name: Linting Commits
+on: [pull_request]
+env:
+  NODE_VERSION: 18
+jobs:
+  commitlint:
+    name: Run Commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+
+      - name: Checkout Branch Commit History
+        uses: actions/checkout@v3.5.3
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Validate PR commits with commitlint
+        if: github.event_name == 'pull_request'
+        run: npx commitlint --from ${{ github.event.pull_request.head.sha }}~${{ github.event.pull_request.commits }} --to ${{ github.event.pull_request.head.sha }} --verbose

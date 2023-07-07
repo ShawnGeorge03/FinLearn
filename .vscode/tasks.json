@@ -1,104 +1,79 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"type": "npm",
-			"script": "install",
-			"path": "client",
-			"label": "Setup Client",
-			"detail": "npm: install - Client",
-			"presentation": {
-				"echo": true,
-				"clear": true,
-				"reveal": "always",
-				"group": "Setup",
-				"close": true
-			}
-		},
-		{
-			"type": "npm",
-			"script": "install",
-			"path": "server",
-			"label": "Setup Server",
-			"detail": "npm: install - Server",
-			"presentation": {
-				"echo": true,
-				"clear": true,
-				"reveal": "always",
-				"group": "Setup",
-				"close": true
-			}
-		},
-		{
-			"label": "Setup",
-			"dependsOn": [
-				"Setup Server",
-				"Setup Client"
-			],
-			"dependsOrder": "parallel",
-			"problemMatcher": []
-		},
-		{
-			"type": "npm",
-			"script": "dev",
-			"path": "client",
-			"label": "Start Client",
-			"detail": "next dev",
-			"group": "build"
-		},
-		{
-			"type": "npm",
-			"script": "dev",
-			"path": "server",
-			"label": "Start Server",
-			"detail": "nodemon ./src/server.js",
-			"group": "build"
-		},
-		{
-			"label": "Start Dev",
-			"dependsOn": [
-				"Start Server",
-				"Start Client"
-			],
-			"dependsOrder": "parallel",
-			"problemMatcher": []
-		},
-		{
-			"type": "npm",
-			"script": "format",
-			"path": "client",
-			"label": "Format Client",
-			"detail": "npm: format - Client",
-			"presentation": {
-				"echo": true,
-				"clear": true,
-				"reveal": "always",
-				"group": "Format",
-				"close": true
-			}
-		},
-		{
-			"type": "npm",
-			"script": "format",
-			"path": "server",
-			"label": "Format Server",
-			"detail": "npm: format - Server",
-			"presentation": {
-				"echo": true,
-				"clear": true,
-				"reveal": "always",
-				"group": "Format",
-				"close": true
-			}
-		},
-		{
-			"label": "Format",
-			"dependsOn": [
-				"Format Server",
-				"Format Client"
-			],
-			"dependsOrder": "parallel",
-			"problemMatcher": []
-		},
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "install",
+      "label": "Setup Project",
+      "detail": "npm: install",
+      "problemMatcher": [],
+      "icon": {
+        "id": "desktop-download"
+      },
+      "presentation": {
+        "clear": true,
+        "close": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "purge",
+      "label": "Purge Modules",
+      "detail": "npm: purge",
+      "problemMatcher": [],
+      "icon": {
+        "id": "clear-all"
+      },
+      "presentation": {
+        "clear": true,
+        "close": true
+      }
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "client",
+      "label": "Start Client",
+      "detail": "next dev",
+      "icon": {
+        "id": "window"
+      },
+      "group": "build"
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "server",
+      "label": "Start Server",
+      "detail": "nodemon ./src/server.ts",
+      "icon": {
+        "id": "server"
+      },
+      "group": "build"
+    },
+    {
+      "label": "Start Dev",
+      "detail": "Start Development for Client & Server",
+      "dependsOn": ["Start Server", "Start Client"],
+      "dependsOrder": "parallel",
+      "problemMatcher": [],
+      "icon": {
+        "id": "code"
+      }
+    },
+    {
+      "type": "npm",
+      "script": "format",
+      "label": "Format Code",
+      "detail": "Prettify Client & Server Code",
+      "presentation": {
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": [],
+      "icon": {
+        "id": "wrench"
+      }
+    }
+  ]
 }

@@ -1,21 +1,23 @@
 {
-    "recommendations": [
-        "deque-systems.vscode-axe-linter",
-        "adpyke.codesnap",
-        "vivaxy.vscode-conventional-commits",
-        "dbaeumer.vscode-eslint",
-        "mhutchie.git-graph",
-        "eamodio.gitlens",
-        "visualstudioexptteam.vscodeintellicode",
-        "visualstudioexptteam.intellicode-api-usage-examples",
-        "ms-vsliveshare.vsliveshare",
-        "davidanson.vscode-markdownlint",
-        "esbenp.prettier-vscode",
-        "shardulm94.trailing-spaces",
-        "salbert.comment-ts",
-        "magssch.react-typescript-boilerplate"
-    ],
-    "unwantedRecommendations": [
-        "kimlimjustin.jsdoc-generator"
-    ]
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "deque-systems.vscode-axe-linter",
+    "adpyke.codesnap",
+    "vivaxy.vscode-conventional-commits",
+    "dbaeumer.vscode-eslint",
+    "figma.figma-vscode-extension",
+    "mhutchie.git-graph",
+    "eamodio.gitlens",
+    "visualstudioexptteam.vscodeintellicode",
+    "visualstudioexptteam.intellicode-api-usage-examples",
+    "ms-vsliveshare.vsliveshare",
+    "davidanson.vscode-markdownlint",
+    "analytic-signal.preview-pdf",
+    "esbenp.prettier-vscode",
+    "shardulm94.trailing-spaces",
+    "salbert.comment-ts",
+    "magssch.react-typescript-boilerplate",
+    "hediet.vscode-drawio"
+  ],
+  "unwantedRecommendations": ["kimlimjustin.jsdoc-generator"]
 }

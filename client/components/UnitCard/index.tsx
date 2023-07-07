@@ -1,7 +1,6 @@
 'use client';
 
-import { Card, CardHeader, CardBody } from '@chakra-ui/react';
-import { Heading, Text } from '@chakra-ui/react';
+import { Card, CardBody, CardHeader, Heading, Text } from '@chakra-ui/react';
 
 import styles from '@/styles/components/UnitCard.module.scss';
 import Link from 'next/link';
@@ -25,9 +24,9 @@ const UnitCard = ({ name, courseSlug, contents }: UnitProps) => {
     <Card variant="elevated">
       <CardHeader
         bg="brand.black"
-        color="brand.white"
         borderTopRadius="md"
-        className={unitHeader}>
+        className={unitHeader}
+        color="brand.white">
         <Heading
           size="md"
           textTransform="capitalize">
@@ -41,8 +40,8 @@ const UnitCard = ({ name, courseSlug, contents }: UnitProps) => {
         {contents.map(({ name, slug, contentType }, contentKey) => {
           return (
             <Link
-              key={contentKey}
-              href={`/learning/${courseSlug}/${contentType}/${slug}`}>
+              href={`/learning/${courseSlug}/${contentType}/${slug}`}
+              key={contentKey}>
               <Text size="sm"> {name} </Text>
             </Link>
           );

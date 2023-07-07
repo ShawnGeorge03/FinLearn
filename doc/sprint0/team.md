@@ -1,7 +1,7 @@
 # Team Information
 
 | Full Name             | UTORID     | Student ID   | Email                                   | Best way to contact                      | Slack User Name        |
-|-----------------------|------------|--------------|-----------------------------------------|------------------------------------------|------------------------|
+| --------------------- | ---------- | ------------ | --------------------------------------- | ---------------------------------------- | ---------------------- |
 | Adam Badar            | `badarada` | `1007965338` | <adam.badar@mail.utoronto.ca>           | Phone: `9054094932`                      | `Adam Badar`           |
 | Aditya Kulkarni       | `kulka141` | `1006906680` | <aditya.kulkarni@mail.utoronto.ca>      | Discord: `A_K#3168`                      | `Aditya Kulkarni`      |
 | Aryan Thakur          | `thakurar` | `1006357899` | <aryan.thakur@mail.utoronto.ca>         | Phone: `4373290661`                      | `Aryan Thakur`         |

@@ -1,15 +1,20 @@
+import { Request, Response } from 'express';
+import { Course } from '../types/learning';
+
 import modelCourse from '../models/Learning/course';
 
-/* Controller method that uses the model modelCourse to retrieve all modelCourse objects */
-export const getAllCourses = async (req: any, res: any) => {
-  modelCourse
-    .find()
-    .select('-_id -__v -units')
-    .then((data) => {
-      res.status(200).json(data);
-    })
-    .catch((error: Error) => {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error' });
-    });
+/**
+ * Retrieves all Courses
+ *
+ * @param {Request} req - Request Object
+ * @param {Response} res - Response Object
+ *
+ * @return {Response} Response Object with an Error or All Courses
+ */
+export const getAllCourses = async (req: Request, res: Response) => {
+  const courses = await modelCourse.find<Course[]>().select('-_id -__v -units');
+
+  return !courses
+    ? res.status(404).json({ message: 'Unable to pull Courses' })
+    : res.status(200).json(courses);
 };

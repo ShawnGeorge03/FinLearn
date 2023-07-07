@@ -1,12 +1,13 @@
 import { Request, Response } from 'express';
-import { Types } from 'mongoose';
 
-import modelCourse from '../models/Learning/course';
 import modelArticle from '../models/Learning/article';
-import modelVideo from '../models/Learning/video';
+import modelCourse from '../models/Learning/course';
 import modelUnit from '../models/Learning/unit';
+import modelVideo from '../models/Learning/video';
 
-import { Course, Unit, Article, Video } from '../types/learning';
+import { modelUser } from '../models/Account/user';
+import { modelProgress } from '../models/Learning/progress';
+import { Article, Unit, Video } from '../types/learning';
 
 type PopulatedUnit = {
   name: String;
@@ -14,65 +15,55 @@ type PopulatedUnit = {
   contents: Array<Article | Video | null>;
 };
 
-/*Retrieves an Article or Video based on the given content ID*/
-const populateContent = async (
-  contentId: Types.ObjectId,
-): Promise<Article | Video | null> => {
-  const requiredFields = 'name slug contentType -_id';
-  const video: Video | null = await modelVideo
-    .findById(contentId)
-    .select(requiredFields);
-  const article: Article | null = await modelArticle
-    .findById(contentId)
-    .select(requiredFields);
-  return video ? video : article;
-};
-
-/*Retrieves a course with the specified slug, populates its units with contents (Articles or Videos),
-and returns the course information*/
-export const getCourse = async (req: Request, res: Response) => {
-  // Checks if the field `courseSlug` is included in the query
-  if (!req.query.hasOwnProperty('courseSlug'))
-    return res
-      .send(400)
-      .json({ message: 'Invalid Request: Missing field "courseSlug".' });
+/**
+ * Retrieves all Units related to a course
+ *
+ * @param {Request} req - Must contain `courseSlug` in query
+ * @param {Response} res - Response Object
+ *
+ * @return {Response}  Response Object with an Error or All Units
+ */
+export const getAllUnitsBySlug = async (req: Request, res: Response) => {
+  // Checks if courseSlug is part of the query
+  if (!req.query.courseSlug)
+    return res.status(400).send({ message: 'Missing courseSlug.' });
 
   const courseSlug = req.query.courseSlug as string;
-
-  // Check if slug parameter is missing
-  if (!courseSlug)
-    return res
-      .status(400)
-      .send({ message: 'Invalid Request: Missing parameter "courseSlug".' });
 
   // Verify slug using Regex (lowercase letters followed by a hyphen)
   const slugRegex = /^[a-z0-9-]+$/;
   if (!slugRegex.test(courseSlug))
-    return res
-      .status(400)
-      .send({ message: 'Invalid Request: Invalid "courseSlug".' });
+    return res.status(400).send({ message: 'Invalid courseSlug.' });
 
   // Find course with the specified slug
-  const course = await modelCourse.findOne<Course>({ slug: courseSlug });
+  let course = await modelCourse.findOne({ slug: courseSlug });
 
   // Check if course exists
   if (!course)
-    return res
-      .status(404)
-      .send({ message: 'Not Found: Course does not exist.' });
+    return res.status(404).send({ message: 'Course does not exist.' });
 
-  const unitID: Array<Types.ObjectId> = course.units;
-  let units: Array<PopulatedUnit> = [];
+  course = await course.populate('units');
+
+  const units: PopulatedUnit[] = [];
 
   // Populate each unit with its contents
-  for (let i = 0; i < unitID.length; i++) {
-    const unit: Unit | null = await modelUnit.findById(unitID[i]);
+  for (const unitID of course.units) {
+    const unit: Unit | null = await modelUnit.findById(unitID);
     if (unit)
       units.push({
         name: unit.name,
         slug: unit.slug,
         contents: await Promise.all(
-          unit.content.map(async (id) => await populateContent(id)),
+          unit.content.map(async (id) => {
+            const requiredFields = 'name slug contentType';
+            const video: Video | null = await modelVideo
+              .findById(id)
+              .select(requiredFields);
+            const article: Article | null = await modelArticle
+              .findById(id)
+              .select(requiredFields);
+            return video ? video : article;
+          }),
         ),
       });
   }
@@ -82,4 +73,54 @@ export const getCourse = async (req: Request, res: Response) => {
     name: course?.name,
     units: units,
   });
+};
+
+/**
+ * Retrieves progress for All Units for the User
+ *
+ * @param {Request} req - Must contain `userID` in query
+ * @param {Response} res - Response Object
+ *
+ * @return {Response}  Response Object with an Empty
+ */
+export const getAllUnitProgress = async (req: Request, res: Response) => {
+  if (!req.query.userID)
+    return res.status(400).json({ message: 'Missing userID' });
+
+  const userIDRegex = /^user_[A-z0-9]+/;
+  if (!userIDRegex.test(req.query.userID as string))
+    return res.status(400).json({ message: 'Invalid userID' });
+
+  const user = await modelUser.findOne({
+    userID: req.query.userID,
+  });
+
+  if (!user)
+    return res.status(400).json({
+      message: 'User not found with the given userID',
+    });
+
+  const learningProgress = await modelProgress
+    .findOne({
+      userID: user._id,
+    })
+    .populate({
+      path: 'units',
+      populate: {
+        path: 'unitID',
+        model: 'Unit',
+      },
+    })
+    .select('units -_id');
+
+  if (!learningProgress) return res.status(404).send({});
+
+  const progressData = learningProgress?.units.map((unit: any) => {
+    return {
+      slug: unit.unitID.slug,
+      progress: unit.progress,
+    };
+  });
+
+  res.send(progressData);
 };

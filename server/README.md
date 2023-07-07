@@ -32,19 +32,5 @@ These are all the commands that can be run
 
 - `npm run dev`: Compile and Start the Server
 - `npm run build`: Compile the Code
-- `npm run clean`: Deletes `node_modules` and `build` folder
-
-## Endpoints
-
-These are all the endpoints available to use for the server
-
-- [Status](#status)
-
-### Status
-
-**`GET /status`**
-
-Returns the status of the API.
-
-- `UP` indicates that the API is running as expected.
-- `DOWN` indicates that the API is currently not working.
+- `npm run lint`: Runs ESLint on Code
+- `npm run lint:fix`: Runs ESLint and makes fixes

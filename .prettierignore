@@ -1,29 +1,40 @@
 # See https://prettier.io/docs/en/ignore.html for more about ignoring files.
 
-# dependencies
+## Shared
+
+# Dependencies
 package-lock.json
-node_modules
-.pnp
-.pnp.js
+node_modules/
 
-# testing
-coverage
+# Logs
+logs
+*.log
+npm-debug.log*
 
-# build files
+# Dotenv
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# TypeScript cache
+*.tsbuildinfo
+
+## Client
+
+# next.js
 .next
 .build
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# local env files
-.env*.local
 
 # vercel
 .vercel
 
 # typescript
-*.tsbuildinfo
 next-env.d.ts

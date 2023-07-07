@@ -1,39 +1,41 @@
-import {
-  Card,
-  CardHeader,
-  Text,
-  Heading,
-  CardBody,
-  Button,
-  Progress,
-  Icon,
-  Box,
-} from '@chakra-ui/react';
-import Link from 'next/link';
 import { Unit } from '@/types/components/Dashboard-Learning/types';
-import { AiOutlineVideoCamera } from '@react-icons/all-files/ai/AiOutlineVideoCamera';
+import {
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  Icon,
+  Progress,
+  Text,
+} from '@chakra-ui/react';
 import { AiOutlineFileText } from '@react-icons/all-files/ai/AiOutlineFileText';
+import { AiOutlineVideoCamera } from '@react-icons/all-files/ai/AiOutlineVideoCamera';
+import Link from 'next/link';
 import styles from '../../styles/components/Dashboard.UnitCard.module.scss';
 
 type UnitCradProps = {
   unit: Unit;
-  courseSlug: String;
+  courseSlug: string;
+  total: number;
+  completed: number;
 };
-const UnitCard = ({ unit, courseSlug }: UnitCradProps) => {
+const UnitCard = ({ unit, courseSlug, total, completed }: UnitCradProps) => {
   return (
     <Card bgColor="brand.white">
       <CardHeader>
         <Heading size="md"> {unit.name}</Heading>
       </CardHeader>
       <Progress
-        value={1}
         ml={5}
+        value={completed === 0 ? 1 : (completed * 100) / total}
         w="80%"
-        hasStripe
-        color="brand.gray"
       />
       <CardBody className={styles.cardContainer}>
-        <Text>0/{unit.contents.length} completed</Text>
+        <Text>
+          {completed.toString()}/{total.toString()} completed
+        </Text>
         <Box
           display={'inline-flex'}
           mt={5}>
@@ -49,9 +51,9 @@ const UnitCard = ({ unit, courseSlug }: UnitCradProps) => {
         </Box>
         <Link href={`/learning/${courseSlug}`}>
           <Button
-            w={'100%'}
+            fontSize={['xs', null, null, 'md']}
             mt={3}
-            fontSize={['xs', null, null, 'md']}>
+            w={'100%'}>
             Begin Learning
           </Button>
         </Link>

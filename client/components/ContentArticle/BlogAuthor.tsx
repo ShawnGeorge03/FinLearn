@@ -1,21 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { HStack, Tag, SpaceProps, Text } from '@chakra-ui/react';
+import { HStack, Text } from '@chakra-ui/react';
+import React from 'react';
 
-interface IBlogTags {
-  tags: Array<string>;
-  marginTop?: SpaceProps['marginTop'];
-}
 type BlogAuthorProps = {
-  date: String;
-  name: String;
+  date: string;
+  name: string;
 };
+
 const BlogAuthor: React.FC<BlogAuthorProps> = (props: BlogAuthorProps) => {
   return (
     <HStack
-      marginTop="2"
-      spacing="2"
+      alignItems="center"
       display="flex"
-      alignItems="center">
+      marginTop="2"
+      spacing="2">
       <Text fontWeight="medium">By: {props.name}</Text>
       <Text>— {props.date}</Text>
     </HStack>

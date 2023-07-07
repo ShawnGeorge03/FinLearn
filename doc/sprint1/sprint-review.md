@@ -30,7 +30,7 @@
 
 ## Product - Review
 
-### Goals and/or tasks that were met/completed:
+### Goals and/or tasks that were met/completed
 
 - Created the UI for the application.
 - Conducted in-depth competitor analysis and user persona analysis.
@@ -39,7 +39,7 @@
 - Created a consistent zoom link and schedule to meet.
 - Created the entire product backlog in JIRA and refined the tickets.
 
-### Goals and/or tasks that were planned but not met/completed:
+### Goals and/or tasks that were planned but not met/completed
 
 - All planned tasks were completed.
 

@@ -40,3 +40,31 @@ export interface Course {
   icon: String;
   units: [Types.ObjectId];
 }
+
+export interface CourseProgress {
+  courseID: Types.ObjectId;
+  progress: Number;
+}
+
+export interface UnitProgress {
+  unitID: Types.ObjectId;
+  progress: Number;
+}
+
+export interface ArticleProgress {
+  articleID: Types.ObjectId;
+  progressPercent: Number;
+}
+
+export interface VideoProgress {
+  videoID: Types.ObjectId;
+  progressPercent: Number;
+}
+
+export interface LearningProgress {
+  userID: Types.ObjectId;
+  courses: [CourseProgress];
+  units: [UnitProgress];
+  videos: [VideoProgress];
+  articles: [ArticleProgress];
+}

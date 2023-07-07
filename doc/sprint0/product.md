@@ -8,7 +8,6 @@ FinLearn is a financial literacy platform for young adults who are ready to take
 
 [Figma Design](https://www.figma.com/file/60Sd92fZbhCcNtnpLVMkaY/FinLearn-UI?type=design&node-id=0-1)
 
-
 #### Q2: Who are your target users? (2-3 personas)
 
 - Young adults between the ages of 18-21
@@ -23,14 +22,15 @@ FinLearn is a financial literacy platform for young adults who are ready to take
 
 - High Schools and teachers with some experience handling money but limited expertise in teaching about money because of lack of training or lack of time still need to impart some knowledge about personal finance management to their students. They do so by referring to a limited set of resources and cannot demonstrate the financial management process in real-time. For them, FinLearn can act as an aid in teaching personal finance where they can allocate learning modules to students and monitor students' understanding through the sandbox environment.
 
+#### Q4: What does "DONE" means to your Team
 
-#### Q4: What does "DONE" means to your Team 
-For a given user story/task/subtask: 
-   -  The code must pass the linting tests.
-   - For the backend, the code should pass automated and manual testing using Postman.
-   - For the frontend, they must pass all unit tests and manual testing.
-   - Each user story must meet the acceptance criteria outlined before the development of the story.
-   - The code should be well-documented i.e. A person on the team who is unaware of the code can understand the code. For a frontend page or backend endpoint, the documentation should outline in depth the use cases, the edge cases, etc.
+For a given user story/task/subtask:
+
+- The code must pass the linting tests.
+- For the backend, the code should pass automated and manual testing using Postman.
+- For the frontend, they must pass all unit tests and manual testing.
+- Each user story must meet the acceptance criteria outlined before the development of the story.
+- The code should be well-documented i.e. A person on the team who is unaware of the code can understand the code. For a frontend page or backend endpoint, the documentation should outline in depth the use cases, the edge cases, etc.
 
 ### Highlights
 

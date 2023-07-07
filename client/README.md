@@ -30,8 +30,7 @@ which consists of the following
 
 These are all the commands that can be run
 
-- `npm run dev`: Compile and Start the Server
+- `npm run dev`: Compile and Start the Client
 - `npm run build`: Compile the Code
-- `npm run start`: Start the Client in Production
 - `npm run lint`: Runs ESLint on Code
-- `npm run clean`: Deletes `node_modules` and `.next` folder
+- `npm run lint:fix`: Runs ESLint and makes fixes

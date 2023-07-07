@@ -16,6 +16,7 @@ export interface AllCourseProps {
 
 export interface Unit {
   name: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
   content: Array<Article | Video>;
@@ -39,4 +40,36 @@ export interface Video {
   videoId: string;
   author: string;
   description?: string;
+}
+export interface UnitWithProgress {
+  unit: Unit;
+  progress: number;
+}
+
+export interface LearningProgressResponse {
+  userId: string;
+  courses: [
+    {
+      courseID: Course;
+      progress: number;
+    },
+  ];
+  units: [
+    {
+      unitID: Unit;
+      progress: number;
+    },
+  ];
+  videos: [
+    {
+      videoID: string;
+      progressPercent: number;
+    },
+  ];
+  article: [
+    {
+      articleID: string;
+      progressPercent: number;
+    },
+  ];
 }

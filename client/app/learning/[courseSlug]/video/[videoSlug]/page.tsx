@@ -2,21 +2,21 @@
 
 import { useEffect, useState } from 'react';
 
-import { Video } from '@/types/learning';
 import YoutubePlayer from '@/components/ContentVideo/YoutubePlayer';
-import { Course } from '../../page';
+import { Video } from '@/types/learning';
 import {
-  Heading,
-  Text,
-  Container,
-  VStack,
-  Spinner,
   Accordion,
   AspectRatio,
+  Container,
+  Heading,
+  Spinner,
+  Text,
+  VStack,
 } from '@chakra-ui/react';
+import { Course } from '../../page';
 
-import styles from '@/styles/pages/Course.module.scss';
 import SidePaneItem from '@/components/ContentVideo/SidePaneItem';
+import styles from '@/styles/pages/Video.module.scss';
 
 type VideoProps = {
   params: {
@@ -53,7 +53,7 @@ export default function ContentPage({ params }: VideoProps) {
 
   useEffect(() => {
     fetchVideo();
-  }, [params]);
+  }, []);
 
   return (
     <div className={container}>
@@ -63,10 +63,10 @@ export default function ContentPage({ params }: VideoProps) {
           {course?.units.map(({ name, contents }, unitKey) => {
             return (
               <SidePaneItem
-                key={unitKey}
                 contents={contents}
-                name={name}
                 courseSlug={params?.courseSlug as string}
+                key={unitKey}
+                name={name}
               />
             );
           })}
@@ -74,14 +74,14 @@ export default function ContentPage({ params }: VideoProps) {
       </div>
       {courseVideo == undefined ? (
         <Spinner
-          thickness="4px"
-          speed="0.65s"
-          emptyColor="gray.200"
-          color="blue.500"
-          size="xl"
-          marginTop="240"
-          justifyContent="center"
           alignSelf="center"
+          color="blue.500"
+          emptyColor="gray.200"
+          justifyContent="center"
+          marginTop="240"
+          size="xl"
+          speed="0.65s"
+          thickness="4px"
         />
       ) : (
         <Container
@@ -96,9 +96,9 @@ export default function ContentPage({ params }: VideoProps) {
           </AspectRatio>
 
           <VStack
+            alignItems="flex-start"
             paddingTop="40px"
-            spacing="2"
-            alignItems="flex-start">
+            spacing="2">
             <Text
               as="p"
               fontSize="lg">
