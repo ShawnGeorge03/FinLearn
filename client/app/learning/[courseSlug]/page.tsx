@@ -25,9 +25,9 @@ export type Course = {
           name: string;
           slug: string;
           contentType: 'video' | 'article';
-        }
+        },
       ];
-    }
+    },
   ];
 };
 

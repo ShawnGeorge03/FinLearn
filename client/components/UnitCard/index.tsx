@@ -14,7 +14,7 @@ type UnitProps = {
       name: string;
       slug: string;
       contentType: 'video' | 'article';
-    }
+    },
   ];
 };
 

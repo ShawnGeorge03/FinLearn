@@ -16,7 +16,7 @@ type SidePaneItemProp = {
       name: string;
       slug: string;
       contentType: 'video' | 'article';
-    }
+    },
   ];
 };
 
