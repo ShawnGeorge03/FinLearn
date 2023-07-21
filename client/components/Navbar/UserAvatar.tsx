@@ -2,24 +2,9 @@
 
 import { Button, ButtonGroup, Spinner } from '@chakra-ui/react';
 import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/nextjs';
-import { useEffect } from 'react';
 
 const UserAvatar = () => {
-  const { isLoaded, userId, isSignedIn } = useAuth();
-
-  useEffect(() => {
-    const body = { userID: userId }; // description is the key which is the same as the database schema field
-
-    const postData = async () => {
-      await fetch(`http://localhost:4000/user`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-      });
-    };
-
-    postData().catch(console.error);
-  }, [userId]);
+  const { isLoaded, isSignedIn } = useAuth();
 
   if (!isLoaded) return <Spinner size="md" />;
 

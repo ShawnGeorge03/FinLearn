@@ -1,5 +1,9 @@
-import { NavLinkProps } from '@/types/base';
 import { Link } from '@chakra-ui/react';
+
+type NavLinkProps = {
+  href: string;
+  name: string;
+};
 
 const NavLink = ({ href, name }: NavLinkProps) => (
   <Link

@@ -4,6 +4,7 @@ import { Types } from 'mongoose';
 Types needed for Learning models
 */
 export interface Article {
+  _id: Types.ObjectId;
   name: String;
   slug: String;
   createdAt: Date;
@@ -15,6 +16,7 @@ export interface Article {
 }
 
 export interface Video {
+  _id: Types.ObjectId;
   name: String;
   slug: String;
   createdAt: Date;
@@ -26,6 +28,7 @@ export interface Video {
 }
 
 export interface Unit {
+  _id: Types.ObjectId;
   name: String;
   slug: String;
   createdAt: Date;
@@ -35,6 +38,7 @@ export interface Unit {
 }
 
 export interface Course {
+  _id: Types.ObjectId;
   name: String;
   slug: String;
   icon: String;
@@ -43,22 +47,24 @@ export interface Course {
 
 export interface CourseProgress {
   courseID: Types.ObjectId;
-  progress: Number;
+  progress: number;
 }
 
 export interface UnitProgress {
   unitID: Types.ObjectId;
-  progress: Number;
+  progress: number;
 }
 
 export interface ArticleProgress {
   articleID: Types.ObjectId;
-  progressPercent: Number;
+  progressPercent: number;
+  isComplete: Boolean;
 }
 
 export interface VideoProgress {
   videoID: Types.ObjectId;
-  progressPercent: Number;
+  progressPercent: number;
+  isComplete: Boolean;
 }
 
 export interface LearningProgress {

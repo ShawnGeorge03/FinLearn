@@ -2,6 +2,7 @@ export type CourseWithUnits = {
   name: string;
   units: [Unit];
 };
+
 export type Unit = {
   name: string;
   slug: string;
@@ -13,7 +14,8 @@ export type Unit = {
     },
   ];
 };
-export type ProgressData = {
-  unitID: Unit;
+
+export type UnitProgressData = {
+  slug: string;
   progress: number;
 };

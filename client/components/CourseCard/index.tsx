@@ -10,10 +10,10 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import { AllCourseProps } from '@/types/learning';
+import { Course } from '@/types/learning';
 
 /* An indiviudal course card, with all relevant properties passed in as props */
-const CourseCard = ({ name, slug, icon }: AllCourseProps) => {
+const CourseCard = ({ name, slug, icon }: Course) => {
   return (
     <Link href={`/learning/${slug}`}>
       <>

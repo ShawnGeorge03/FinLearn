@@ -3,16 +3,11 @@ import { Heading, Link, Progress, Text } from '@chakra-ui/react';
 type UnitListItemProps = {
   name: string;
   href: string;
-  doneValue: number;
-  totalValue: number;
+  value: number;
+  max: number;
 };
 
-const UnitListItem = ({
-  name,
-  href,
-  doneValue,
-  totalValue,
-}: UnitListItemProps) => {
+const UnitListItem = ({ name, href, value, max }: UnitListItemProps) => {
   return (
     <Heading
       size="lg"
@@ -21,14 +16,16 @@ const UnitListItem = ({
       <Progress
         className={'progressBar'}
         hasStripe
+        max={max}
+        min={0}
         mt={3}
         size="md"
-        value={(doneValue / totalValue) * 100}
+        value={value}
       />
       <Text
         fontSize="lg"
         mt={3}>
-        {doneValue}/{totalValue} points
+        {value}/{max} points
       </Text>
     </Heading>
   );

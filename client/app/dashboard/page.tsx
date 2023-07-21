@@ -15,6 +15,7 @@ import { useAuth } from '@clerk/nextjs';
 import { useEffect, useState } from 'react';
 import Sidebar from '../../components/Dashboard-Learning/Sidebar';
 import styles from '../../styles/pages/Dashboard.module.scss';
+import { ErrorResponse } from '@/types/base';
 
 const DashboardPage = () => {
   const { userId } = useAuth();
@@ -25,10 +26,6 @@ const DashboardPage = () => {
   const [units, setUnits] = useState<Array<Unit>>();
   const [isUnitGridReady, setIsUnitGridReady] = useState(false);
   const [userUnits, setUserUnits] = useState<Array<UnitWithProgress>>([]);
-
-  const isObjectEmpty = (objectName: object) => {
-    return Object.keys(objectName).length === 0;
-  };
 
   const isCourseInList = (courses: Course[], slug: string): boolean => {
     for (const course of courses) if (course.slug === slug) return true;
@@ -42,18 +39,23 @@ const DashboardPage = () => {
       const userCoursesResponse: Response = await fetch(
         `http://localhost:4000/learningProgress?userID=${userId}`,
       );
-      const userCoursesData: LearningProgressResponse =
-        await userCoursesResponse.json();
-      const loadedUserCourses: Course[] = isObjectEmpty(userCoursesData)
-        ? []
-        : userCoursesData.courses.map((elem) => elem.courseID);
-      setUserCourses(loadedUserCourses);
-      const loadedUserUnits: UnitWithProgress[] = isObjectEmpty(userCoursesData)
-        ? []
-        : userCoursesData.units.map((elem) => {
-            return { unit: elem.unitID, progress: elem.progress };
-          });
-      setUserUnits(loadedUserUnits);
+      let loadedUserCourses: Course[] = [];
+      let loadedUserUnits: UnitWithProgress[] = [];
+      if (userCoursesResponse.ok) {
+        const userCoursesData: LearningProgressResponse =
+          await userCoursesResponse.json();
+        loadedUserCourses = userCoursesData.courses.map(
+          (elem) => elem.courseID,
+        );
+        setUserCourses(loadedUserCourses);
+        loadedUserUnits = userCoursesData.units.map((elem) => {
+          return { unit: elem.unitID, progress: elem.progress };
+        });
+        setUserUnits(loadedUserUnits);
+      } else {
+        const error: ErrorResponse = await userCoursesResponse.json();
+        console.error(error);
+      }
 
       /* set explore courses*/
       const exploreCoursesResponse: Response = await fetch(
@@ -100,7 +102,6 @@ const DashboardPage = () => {
   }, [selectedCourse]);
 
   if (!isSideBarReady)
-    // Is a clerk protected route so do not need to check isLoaded
     return (
       <div className={styles.center}>
         <Spinner

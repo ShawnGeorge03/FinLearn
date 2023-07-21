@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "0.8.0",
+  "version": "0.17.0",
   "description": "FinLearn Client",
   "type": "commonjs",
   "license": "ISC",
@@ -22,12 +22,16 @@
     "framer-motion": "^10.12.17",
     "next": "^13.4.7",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-youtube": "^10.1.0",
+    "react-scrollbars-custom": "^4.1.1",
+    "react-ts-tradingview-widgets": "^1.0.15"
   },
   "devDependencies": {
     "@types/node": "^20.3.2",
     "@types/react": "^18.2.14",
     "@types/react-dom": "^18.2.6",
+    "@types/youtube-player": "^5.5.7",
     "eslint-config-next": "^13.4.7",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",

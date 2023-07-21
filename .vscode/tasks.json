@@ -52,6 +52,17 @@
       "group": "build"
     },
     {
+      "type": "npm",
+      "script": "webhook",
+      "path": "server",
+      "label": "OpenSSH Server",
+      "detail": "ssh -o ServerAliveInterval=60 -R finlearn.serveo.net:80:localhost:4000 serveo.net",
+      "problemMatcher": [],
+      "icon": {
+        "id": "server"
+      }
+    },
+    {
       "label": "Start Dev",
       "detail": "Start Development for Client & Server",
       "dependsOn": ["Start Server", "Start Client"],

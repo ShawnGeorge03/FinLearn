@@ -29,6 +29,14 @@ const navLinks = [
     name: 'Learning',
     href: '/learning',
   },
+  {
+    name: 'Research',
+    href: '/research',
+  },
+  {
+    name: 'Trading',
+    href: '/trading',
+  },
 ];
 
 const Navbar = () => {

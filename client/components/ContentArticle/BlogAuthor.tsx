@@ -1,21 +1,23 @@
 import { HStack, Text } from '@chakra-ui/react';
-import React from 'react';
 
 type BlogAuthorProps = {
-  date: string;
-  name: string;
+  date: string | undefined;
+  name: string | undefined;
 };
 
-const BlogAuthor: React.FC<BlogAuthorProps> = (props: BlogAuthorProps) => {
+const BlogAuthor = ({ date, name }: BlogAuthorProps) => {
+  const formattedDate = new Date(date as string).toLocaleDateString();
+
   return (
     <HStack
       alignItems="center"
       display="flex"
       marginTop="2"
       spacing="2">
-      <Text fontWeight="medium">By: {props.name}</Text>
-      <Text>— {props.date}</Text>
+      <Text fontWeight="medium">{name}</Text>
+      <Text> — {formattedDate}</Text>
     </HStack>
   );
 };
+
 export default BlogAuthor;

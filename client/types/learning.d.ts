@@ -2,17 +2,11 @@
 Types needed for Learning models
 */
 
-export interface Course {
+export type Course = {
   name: string;
   slug: string;
   icon: string;
-}
-
-export interface AllCourseProps {
-  name: string;
-  slug: string;
-  icon: string;
-}
+};
 
 export interface Unit {
   name: string;
@@ -25,8 +19,8 @@ export interface Unit {
 export type Article = {
   name: string;
   slug: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   image?: string;
   author: string;
   contentType: string;
@@ -47,7 +41,6 @@ export interface UnitWithProgress {
 }
 
 export interface LearningProgressResponse {
-  userId: string;
   courses: [
     {
       courseID: Course;

@@ -1,8 +1,8 @@
-type Props = {
+export type Props = {
   children: React.ReactNode;
 };
 
-export type NavLinkProps = {
-  href: string;
-  name: string;
+export type ErrorResponse = {
+  type: string;
+  message: string;
 };

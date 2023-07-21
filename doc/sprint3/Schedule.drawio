@@ -1,0 +1,46 @@
+<mxfile host="Electron" modified="2023-07-21T20:33:04.960Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/21.3.7 Chrome/112.0.5615.204 Electron/24.5.0 Safari/537.36" etag="KFZKhzDAzPwHUnOgAYZ2" version="21.3.7" type="device">
+  <diagram name="Page-1" id="o2KbcEg5u0js7NsVz1Kw">
+    <mxGraphModel dx="1434" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="aqvkhjauLj25WPa7nWlx-3" value="Depends on" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="aqvkhjauLj25WPa7nWlx-1" target="aqvkhjauLj25WPa7nWlx-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-1" value="FIN-34" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="80" y="80" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-2" value="FIN-33" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="280" y="80" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-4" value="FIN-34" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="80" y="200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-5" value="FIN-34" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="200" y="200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-6" value="FIN-34" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="320" y="200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-7" value="FIN-34" style="whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="440" y="200" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-8" value="Independent" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="90" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-9" value="Independent" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="210" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-10" value="Independent" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="330" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-11" value="Independent" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="290" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="aqvkhjauLj25WPa7nWlx-13" value="&lt;p&gt;&lt;font&gt;&lt;span style=&quot;font-family: Menlo, Monaco, &amp;quot;Courier New&amp;quot;, monospace;&quot;&gt;Explain what you do to keep sprints on schedule.&lt;br&gt;&lt;/span&gt;- Daily Standups&lt;br&gt;- For crucial task, we do pair programming&lt;br&gt;- For any blockers or issues raised in the standup we reach out for help&lt;br&gt;- For data-related tasks we have created mock data&lt;br&gt;- For tasks that rely on underlying database schemas we schedule meeting at the beginning of the sprint&lt;/font&gt;&lt;/p&gt;" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fillColor=none;labelPosition=center;verticalLabelPosition=middle;labelBackgroundColor=none;fontColor=default;" vertex="1" parent="1">
+          <mxGeometry x="80" y="350" width="520" height="110" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

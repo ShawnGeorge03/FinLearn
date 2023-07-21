@@ -1,16 +1,18 @@
 {
   "name": "server",
-  "version": "0.8.0",
+  "version": "0.17.0",
   "description": "FinLearn Server",
   "type": "commonjs",
   "license": "ISC",
   "scripts": {
     "dev": "nodemon ./src/server.ts",
+    "webhook": "ssh -o ServerAliveInterval=60 -R finlearn.serveo.net:80:localhost:4000 serveo.net",
     "build": "tsc",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^4.10.15",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "mongoose": "^7.3.1",

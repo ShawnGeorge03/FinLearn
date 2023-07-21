@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from 'react';
 
+import SidePaneItem from '@/components/ContentVideo/SidePaneItem';
 import YoutubePlayer from '@/components/ContentVideo/YoutubePlayer';
+import styles from '@/styles/pages/Video.module.scss';
 import { Video } from '@/types/learning';
 import {
   Accordion,
@@ -13,47 +15,106 @@ import {
   Text,
   VStack,
 } from '@chakra-ui/react';
-import { Course } from '../../page';
 
-import SidePaneItem from '@/components/ContentVideo/SidePaneItem';
-import styles from '@/styles/pages/Video.module.scss';
+import { ErrorResponse } from '@/types/base';
+import { CourseWithUnits } from '@/types/components/Dashboard-Learning/types';
+import { useAuth } from '@clerk/nextjs';
 
 type VideoProps = {
   params: {
-    courseSlug?: string;
-    videoSlug?: string;
+    courseSlug: string;
+    videoSlug: string;
   };
-};
-
-type CourseVideo = {
-  video: Video;
 };
 
 export default function ContentPage({ params }: VideoProps) {
-  const { container, title, unitLists } = styles;
+  const { center, container, title, unitLists } = styles;
+  const { userId } = useAuth();
+  const [video, setVideo] = useState<Video>();
+  const [course, setCourse] = useState<CourseWithUnits>();
+  const [videoProgress, setVideoProgress] = useState(0);
 
-  const [courseVideo, setCourseVideo] = useState<CourseVideo>();
-  const [course, setCourse] = useState<Course>();
-
-  const fetchVideo = async () => {
+  const getCourseWithUnits = async () => {
     try {
-      const urlCourse = `http://localhost:4000/units?courseSlug=${params?.courseSlug}`;
-      const responseCourse = await fetch(urlCourse);
-      const dataCourse: Course = await responseCourse.json();
-      const url = `http://localhost:4000/video?videoSlug=${params?.videoSlug}`;
+      const url = `http://localhost:4000/units?courseSlug=${params?.courseSlug}`;
       const response = await fetch(url);
-      const data: CourseVideo = await response.json();
-      setCourse(dataCourse);
-      setCourseVideo(data);
+      if (response.ok) {
+        const data: CourseWithUnits = await response.json();
+        setCourse(data);
+      } else {
+        const error: ErrorResponse = await response.json();
+        console.error(error);
+      }
     } catch (error) {
-      setCourseVideo(undefined);
-      console.error((error as Error).message);
+      console.error(error);
     }
   };
 
+  const getVideo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4000/video?videoSlug=${params?.videoSlug}`,
+      );
+      if (response.ok) {
+        const data: Video = await response.json();
+        setVideo(data);
+      } else {
+        const error: ErrorResponse = await response.json();
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getProgress = async () => {
+    try {
+      const progressResponse = await fetch(
+        `http://localhost:4000/progress/video?userID=${userId}&videoSlug=${params.videoSlug}`,
+      );
+      if (progressResponse.ok) {
+        const progressData = await progressResponse.json();
+        setVideoProgress(progressData.progressPercent);
+      } else {
+        const error: ErrorResponse = await progressResponse.json();
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
   useEffect(() => {
-    fetchVideo();
-  }, []);
+    getCourseWithUnits();
+    getVideo();
+    getProgress();
+  }, [params]);
+
+  if (!course && !video)
+    return (
+      <div className={center}>
+        <Spinner
+          color="blue.500"
+          emptyColor="gray.200"
+          size="xl"
+          speed="0.65s"
+          thickness="4px"
+        />
+        <Text>Loading Video</Text>
+      </div>
+    );
+
+  if (!userId || userId == null)
+    return (
+      <Spinner
+        alignSelf="center"
+        color="blue.500"
+        emptyColor="gray.200"
+        justifyContent="center"
+        marginTop="240"
+        size="xl"
+        speed="0.65s"
+        thickness="4px"
+      />
+    );
 
   return (
     <div className={container}>
@@ -72,41 +133,32 @@ export default function ContentPage({ params }: VideoProps) {
           })}
         </Accordion>
       </div>
-      {courseVideo == undefined ? (
-        <Spinner
-          alignSelf="center"
-          color="blue.500"
-          emptyColor="gray.200"
-          justifyContent="center"
-          marginTop="240"
-          size="xl"
-          speed="0.65s"
-          thickness="4px"
-        />
-      ) : (
-        <Container
-          maxW={'7xl'}
-          p="12">
-          <Heading as="h1">{courseVideo.video.name}</Heading>
+      <Container
+        maxW={'7xl'}
+        p="12">
+        <Heading as="h1">{video?.name}</Heading>
+        <AspectRatio
+          ratio={16 / 9}
+          w="100%">
+          <YoutubePlayer
+            progressPercent={videoProgress}
+            userId={userId}
+            videoId={video?.videoId.toString() || ''}
+            videoSlug={params.videoSlug}
+          />
+        </AspectRatio>
 
-          <AspectRatio
-            ratio={16 / 9}
-            w="100%">
-            <YoutubePlayer videoId={courseVideo.video.videoId.toString()} />
-          </AspectRatio>
-
-          <VStack
-            alignItems="flex-start"
-            paddingTop="40px"
-            spacing="2">
-            <Text
-              as="p"
-              fontSize="lg">
-              {courseVideo.video.description}
-            </Text>
-          </VStack>
-        </Container>
-      )}
+        <VStack
+          alignItems="flex-start"
+          paddingTop="40px"
+          spacing="2">
+          <Text
+            as="p"
+            fontSize="lg">
+            {video?.description}
+          </Text>
+        </VStack>
+      </Container>
     </div>
   );
 }

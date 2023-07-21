@@ -7,7 +7,6 @@ This folder contains all the code regarding the server
 - [Table of Contents](#table-of-contents)
 - [Folder Structure](#folder-structure)
 - [NPM Scripts](#npm-scripts)
-- [Endpoints](#endpoints)
 
 ## Folder Structure
 

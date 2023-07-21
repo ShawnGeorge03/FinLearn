@@ -1,0 +1,19 @@
+@import '../abstracts/mixins';
+
+.container {
+  margin: 1.5em;
+
+  .searchWrapper {
+    margin-bottom: 7em;
+  }
+
+  h1 {
+    padding-bottom: 1rem;
+  }
+}
+
+@include geq(768px) {
+  .container > .searchWrapper {
+    padding-left: 0.5em;
+  }
+}

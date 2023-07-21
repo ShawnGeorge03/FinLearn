@@ -1,0 +1,15 @@
+.container {
+  width: 100%;
+  min-height: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 1em;
+  cursor: pointer;
+  border-bottom: 2px solid rgba(216, 216, 216, 0.3215686275);
+
+  &:last-child {
+    border-bottom: 0;
+  }
+}

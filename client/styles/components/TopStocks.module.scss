@@ -1,0 +1,58 @@
+.container {
+  width: 95%;
+  margin: auto 2% 2%;
+  height: 40vh;
+}
+
+.center {
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .question {
+    height: 10vh;
+    width: 10vw;
+    padding-bottom: 10px;
+  }
+}
+
+.wrapper {
+  display: flex;
+  overflow-x: auto;
+}
+
+.card {
+  flex: 1 0 250px;
+  background: #fff;
+  margin: 1rem;
+  overflow: hidden;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 250ms ease-in-out;
+
+  img {
+    width: 250px;
+    height: 250px;
+    object-fit: center;
+  }
+}
+
+.content {
+  padding: 1rem;
+}
+
+@media screen and (max-width: 625px) {
+  .container {
+    width: 100%;
+  }
+
+  .cards-container {
+    padding: 0.5rem;
+  }
+
+  .card {
+    margin: 0.5rem;
+  }
+}
