@@ -20,6 +20,9 @@ jobs:
         with:
           ref: '${{ github.head_ref }}'
 
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2.2.0
+
       - name: 'DockerHub Login'
         uses: docker/login-action@v2.2.0
         with:
@@ -34,6 +37,7 @@ jobs:
         with:
           context: '{{defaultContext}}:server'
           file: Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ secrets.GP1_DOCKERHUB_USERNAME }}/server:latest
 
@@ -51,6 +55,9 @@ jobs:
         with:
           ref: '${{ github.head_ref }}'
 
+      - name: Docker Setup QEMU
+        uses: docker/setup-qemu-action@v2.2.0
+
       - name: 'DockerHub Login'
         uses: docker/login-action@v2.2.0
         with:
@@ -65,5 +72,6 @@ jobs:
         with:
           context: '{{defaultContext}}:client'
           file: Dockerfile
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ secrets.GP1_DOCKERHUB_USERNAME }}/client:latest
