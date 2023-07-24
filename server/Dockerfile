@@ -1,16 +1,20 @@
-FROM node:18 as build
+FROM node:18-alpine AS base
+
+FROM base as builder
 
 WORKDIR /src
 COPY package.json ./
-COPY tsconfig.json ./
 RUN npm install
 COPY . .
 RUN npm run build
 
 
-FROM node:18-alpine as main
-
-COPY --from=build /src /
+FROM base as main
 ENV PORT 4000
+
+COPY package.json ./
+COPY --from=builder /src/build ./
+COPY --from=builder /src/.env ./.env
+RUN npm install --omit=dev
 EXPOSE ${PORT}
-CMD [ "node", "./build/server.js" ]
+CMD [ "node", "./server.js" ]
