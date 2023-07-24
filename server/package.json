@@ -12,10 +12,10 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@clerk/clerk-sdk-node": "^4.12.0",
+    "@clerk/clerk-sdk-node": "^4.12.1",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mongoose": "^7.4.0",
+    "mongoose": "^7.4.1",
     "ts-dotenv": "^0.9.1"
   },
   "devDependencies": {
