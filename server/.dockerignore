@@ -2,4 +2,5 @@ README.md
 .eslintrc.json
 build
 .dockerignore
+.env
 Dockerfile

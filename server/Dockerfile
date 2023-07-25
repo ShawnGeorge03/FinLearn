@@ -14,7 +14,6 @@ ENV PORT 4000
 
 COPY package.json ./
 COPY --from=builder /src/build ./
-COPY --from=builder /src/.env ./.env
 RUN npm install --omit=dev
 EXPOSE ${PORT}
 CMD [ "node", "./server.js" ]
