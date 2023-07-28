@@ -36,7 +36,7 @@ export default function ContentPage({ params }: VideoProps) {
 
   const getCourseWithUnits = async () => {
     try {
-      const url = `http://localhost:4000/units?courseSlug=${params?.courseSlug}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/units?courseSlug=${params?.courseSlug}`;
       const response = await fetch(url);
       if (response.ok) {
         const data: CourseWithUnits = await response.json();
@@ -53,7 +53,7 @@ export default function ContentPage({ params }: VideoProps) {
   const getVideo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/video?videoSlug=${params?.videoSlug}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/video?videoSlug=${params?.videoSlug}`,
       );
       if (response.ok) {
         const data: Video = await response.json();
@@ -69,7 +69,7 @@ export default function ContentPage({ params }: VideoProps) {
   const getProgress = async () => {
     try {
       const progressResponse = await fetch(
-        `http://localhost:4000/progress/video?userID=${userId}&videoSlug=${params.videoSlug}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/progress/video?userID=${userId}&videoSlug=${params.videoSlug}`,
       );
       if (progressResponse.ok) {
         const progressData = await progressResponse.json();

@@ -34,7 +34,9 @@ export default function TopStocks() {
 
   const getTopStocks = async () => {
     try {
-      const response = await fetch('http://localhost:4000/topStocks');
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/topStocks`,
+      );
       const data: TopStocksResults = await response.json();
       setTopStocks(data);
     } catch (err) {

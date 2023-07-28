@@ -55,7 +55,7 @@ export default function UnitPage({ params }: CourseProps) {
   const getCourse = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/units?courseSlug=${params?.courseSlug}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/units?courseSlug=${params?.courseSlug}`,
       );
       const data: CourseWithUnits = await response.json();
       setCourse(data);
@@ -68,7 +68,7 @@ export default function UnitPage({ params }: CourseProps) {
   const getAllUnitsProgress = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/unitsProgress?userID=${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/unitsProgress?userID=${userId}`,
       );
       const data: UnitProgressData[] = await response.json();
       setAllUnitsProgress(data);

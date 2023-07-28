@@ -66,7 +66,7 @@ const YoutubePlayer = ({
       body: JSON.stringify(requestBody), // Convert the object to JSON string
     };
 
-    fetch('http://localhost:4000/videoProgress', fetchOptions);
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/videoProgress`, fetchOptions);
   };
 
   useEffect(() => {
