@@ -71,7 +71,7 @@ jobs:
           ref: '${{ github.head_ref }}'
 
       - name: Create Reports Directory
-        run: mkdir reports
+        run: mkdir ${{ env.SERVER_REPORTS_FOLDER }}
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v2.5.2
