@@ -132,9 +132,10 @@ jobs:
         run: |
           touch .env
           echo -en 'PORT=4000\nALPHAVANTAGE_API_KEY=${{ secrets.ALPHAVANTAGE_API_KEY_G2 }}\nMONGO_URI=${{ secrets.MONGO_URI_G2 }}' > .env
+          cat .env
 
       - name: Run Server
-        run: docker run -d -p 4000:4000 --env-file .env awhooogha/server:latest
+        run: docker run -p 4000:4000 --env-file .env awhooogha/server:latest
 
       - name: 'Check Server Status'
         run: 'curl http://localhost:4000/status'
