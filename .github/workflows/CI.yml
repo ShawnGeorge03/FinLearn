@@ -62,7 +62,7 @@ jobs:
           region: ${{ secrets.GP1_GCP_REGION }}
 
       - name: 'Check Server Status'
-        run: 'curl "${{ steps.deploy.outputs.url }}"/status'
+        run: 'curl ${{ steps.deploy.outputs.url }}/status'
 
   test-server:
     name: 'Test Server Deployment'
