@@ -1,15 +1,18 @@
 version: '3.8'
 services:
   client:
-    image: awhooogha/client:0.17.0
-    build: ./client
+    image: awhooogha/client:latest
+    build:
+      context: ./client
+      args:
+        - SEVER_URL=http://localhost:4000
     depends_on:
       - server
     ports:
       - 3000:3000
     env_file: ./client/.env
   server:
-    image: awhooogha/server:0.17.0
+    image: awhooogha/server:latest
     build: ./server
     ports:
       - 4000:4000
