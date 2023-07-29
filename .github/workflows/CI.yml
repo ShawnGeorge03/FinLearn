@@ -97,10 +97,10 @@ jobs:
         run: ls ${{ env.SERVER_REPORTS_FOLDER }} -a
 
       - name: Publish Postman Reports
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/upload-artifact@v3
         with:
           name: Server Reports
-          path: ${{ env.SERVER_REPORTS_FOLDER }}
+          path: '${{ env.SERVER_REPORTS_FOLDER }}/'
 
   build-client:
     name: 'Build Client Image'
