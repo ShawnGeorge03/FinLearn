@@ -131,7 +131,7 @@ jobs:
       - name: Create .env file
         run: |
           touch .env
-          echo -en 'PORT=4000\nALPHAVANTAGE_API_KEY=${{ secrets.ALPHAVANTAGE_API_KEY_G2 }}\nMONGO_URI=${{ secrets.MONGO_URI_G2 }}' > .env
+          echo -en 'PORT=4000\nALPHAVANTAGE_API_KEY=${{ secrets.GP1_ALPHAVANTAGE_API_KEY }}\nMONGO_URI=${{ secrets.GP1_MONGO_URI }}' > .env
           cat .env
 
       - name: Run Server
