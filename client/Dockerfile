@@ -10,8 +10,6 @@ COPY . .
 RUN npm run build
 
 FROM base as main
-ENV PORT 3000
-ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /app
@@ -20,5 +18,5 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/.next/static ./.next/static
 RUN npm install --omit=dev
-EXPOSE ${PORT}
+EXPOSE 3000
 CMD [ "npm", "start" ]

@@ -10,10 +10,9 @@ RUN npm run build
 
 
 FROM base as main
-ENV PORT 4000
 
 COPY package.json ./
 COPY --from=builder /src/build ./
 RUN npm install --omit=dev
-EXPOSE ${PORT}
+EXPOSE 4000
 CMD [ "node", "./server.js" ]
