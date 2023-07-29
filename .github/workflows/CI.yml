@@ -125,9 +125,6 @@ jobs:
           username: ${{ secrets.GP1_DOCKERHUB_USERNAME }}
           password: ${{ secrets.GP1_DOCKER_TOKEN }}
 
-      - name: Docker Pull
-        run: docker pull awhooogha/server:latest
-
       - name: Create .env file
         run: |
           touch .env
@@ -135,10 +132,16 @@ jobs:
           cat .env
 
       - name: Run Server
-        run: |
-          docker run -d -p 4000:4000 --env-file .env awhooogha/server:latest
-          curl http://localhost:4000/status
-          newman run "28563069-fcd6a167-f310-4f52-8dc1-897aebf4fe22" -e "28563069-184e8ae6-2a47-4c61-83b4-ecc672104e67" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -x
+        uses: addnab/docker-run-action@v3
+        with:
+          username: ${{ secrets.GP1_DOCKERHUB_USERNAME }}
+          password: ${{ secrets.GP1_DOCKER_TOKEN }}
+          registry: docker.io
+          image: awhooogha/server:latest
+          options: -d -p 4000:4000 --env-file .env
+          run: |
+            curl http://localhost:4000/status
+            newman run "28563069-fcd6a167-f310-4f52-8dc1-897aebf4fe22" -e "28563069-184e8ae6-2a47-4c61-83b4-ecc672104e67" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -x
 
   build-client:
     name: 'Build Client Image'
