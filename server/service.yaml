@@ -38,9 +38,9 @@ spec:
             tcpSocket:
               port: 4000
             initialDelaySeconds: 60
-            timeoutSeconds: 240
-            failureThreshold: 1
-            periodSeconds: 240
+            timeoutSeconds: 1
+            failureThreshold: 3
+            periodSeconds: 10
           livenessProbe:
             httpGet:
               path: /status
