@@ -5,6 +5,7 @@ on:
       - group-1
 env:
   NODE_VERSION: 18
+  SERVER_REPORTS_FOLDER: server/reports
 jobs:
   build-server:
     name: 'Build Server Image'
@@ -58,6 +59,40 @@ jobs:
         with:
           metadata: ./server/service.yaml
           region: ${{ secrets.GP1_GCP_REGION }}
+
+  test-server:
+    name: 'Test Server Deployment'
+    runs-on: ubuntu-latest
+    needs: deploy-server
+    steps:
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: '${{ github.head_ref }}'
+
+      - name: Create Reports Directory
+        run: mkdir reports
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.5.2
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          cache: 'npm'
+
+      - name: Install newman
+        run: npm install -g newman newman-reporter-htmlextra
+
+      - name: Run Learning Collection
+        run: newman run "28563069-fcd6a167-f310-4f52-8dc1-897aebf4fe22" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -r htmlextra --reporter-htmlextra-export ${{ env.SERVER_REPORTS_FOLDER }}/learning.html --reporter-htmlextra-displayProgressBar --reporter-htmlextra-browserTitle "Learning Report" --reporter-htmlextra-title "Learning Results"
+
+      - name: Run Research Collection
+        run: newman run "28563069-4f8a9d7f-f211-4250-a70a-d5af7fe5ffed" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -r htmlextra --reporter-htmlextra-export ${{ env.SERVER_REPORTS_FOLDER }}/research.html --reporter-htmlextra-displayProgressBar --reporter-htmlextra-browserTitle "Research Report" --reporter-htmlextra-title "Research Results"
+
+      - name: Publish Postamn Reports
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: Server Reports
+          path: ${{ env.SERVER_REPORTS_FOLDER }}
 
   build-client:
     name: 'Build Client Image'
