@@ -82,22 +82,13 @@ jobs:
         with:
           node-version: '${{ env.NODE_VERSION }}'
 
-      - name: Install newman
-        run: npm install -g newman newman-reporter-htmlextra
-
       - name: Run Learning Collection
         run: |
-          newman run "28563069-fcd6a167-f310-4f52-8dc1-897aebf4fe22" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -r htmlextra --reporter-htmlextra-export ${{ env.SERVER_REPORTS_FOLDER }}/learning.html --reporter-htmlextra-displayProgressBar --reporter-htmlextra-browserTitle "Learning Report" --reporter-htmlextra-title "Learning Results"
+          newman run "28563069-fcd6a167-f310-4f52-8dc1-897aebf4fe22" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5
 
       - name: Run Research Collection
         run: |
-          newman run "28563069-4f8a9d7f-f211-4250-a70a-d5af7fe5ffed" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -r htmlextra --reporter-htmlextra-export ${{ env.SERVER_REPORTS_FOLDER }}/research.html --reporter-htmlextra-displayProgressBar --reporter-htmlextra-browserTitle "Research Report" --reporter-htmlextra-title "Research Results"
-
-      - name: Publish Postman Reports
-        uses: actions/download-artifact@v3.0.2
-        with:
-          name: Server Reports
-          path: ${{ env.SERVER_REPORTS_FOLDER }}
+          newman run "28563069-4f8a9d7f-f211-4250-a70a-d5af7fe5ffed" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5
 
   build-client:
     name: 'Build Client Image'
