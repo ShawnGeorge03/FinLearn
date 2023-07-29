@@ -129,13 +129,12 @@ jobs:
         run: docker pull awhooogha/server:latest
 
       - name: Create .env file
-        working-directory: 'server'
         run: |
           touch .env
-          echo PORT=4000 MONGO_URI=${{ secrets.MONGO_URI_G2 }} ALPHAVANTAGE_API_KEY=${{ secrets.ALPHAVANTAGE_API_KEY_G2 }} >> .env
+          echo -en 'PORT=4000\nALPHAVANTAGE_API_KEY=${{ secrets.ALPHAVANTAGE_API_KEY_G2 }}\nMONGO_URI=${{ secrets.MONGO_URI_G2 }}' > .env
 
       - name: Run Server
-        run: docker compose up -d server
+        run: docker run -d -p 4000:4000 --env-file .env awhooogha/server:latest
 
       - name: Run Tests
         run: |
