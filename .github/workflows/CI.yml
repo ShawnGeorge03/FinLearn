@@ -6,8 +6,8 @@ on:
 env:
   NODE_VERSION: 18
 jobs:
-  server:
-    name: 'Server Image'
+  build-server:
+    name: 'Build Server Image'
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js environment
@@ -37,8 +37,8 @@ jobs:
           push: true
           tags: ${{ secrets.GP1_DOCKERHUB_USERNAME }}/server:latest
 
-  client:
-    name: 'Client Image'
+  build-client:
+    name: 'Build Client Image'
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js environment
