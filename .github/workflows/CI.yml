@@ -55,10 +55,14 @@ jobs:
           credentials_json: ${{ secrets.GP1_GCP_SA_KEY }}
 
       - name: Deploy to Cloud Run
+        id: deploy
         uses: google-github-actions/deploy-cloudrun@v1.0.2
         with:
           metadata: ./server/service.yaml
           region: ${{ secrets.GP1_GCP_REGION }}
+
+      - name: 'Use output'
+        run: 'curl "${{ steps.deploy.outputs.url }}"/status'
 
   test-server:
     name: 'Test Server Deployment'
