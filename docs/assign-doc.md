@@ -102,7 +102,6 @@ When a change is pushed to GitHub, a GitHub Action for is triggered to run test 
   4. Create `.env` file using the values stored on Github Secrets.
   5. Run the Jest Test Runner.
   6. Collect and Publish the Coverage Report as an Artifacts.
-  7. Collect and Publish the Test Report
 
 ### Building & Pushing Images
 
@@ -141,9 +140,14 @@ After a successful deployment to GCP, a series of automated tests will run to en
   3. Setup a `Node.js 18` Environment.
   4. Install `newman` `newman-reporter-htmlextra` via npm.
   5. Run the test cases stored in the [FinLearn Workspace](https://www.postman.com/cscc01-finlearn/workspace/finlearn/overview) on Postman using `newman` and pass the Postman API Key from GitHub Secrets.
-  6. Collect and Publish the Deployment Reports as Artifacts.
+  6. Collect and Publish the Reports as Artifacts.
 
+## Try it out
 
-## Artifacts
+To acess the deployed services, use the links below. The initial startup will be slow since Google Cloud Run will provision a machine based on requests. So, if there has been no requests it will remove all active instances.
 
-After the Github Action is completed there are 3 new `.zip` files that are available to be downloaded. An example of such can be found in the `Example Artifacts` folder.
+- Client URL: <https://client-w3vto4v6qa-uc.a.run.app>
+- Server URL: <https://server-w3vto4v6qa-uc.a.run.app/>
+- DockerHub Repositories:
+  - [Client Image](https://hub.docker.com/r/awhooogha/client)
+  - [Server Image](https://hub.docker.com/r/awhooogha/server)
