@@ -1,4 +1,4 @@
-name: 'Group 1 CI'
+name: 'Group 1 CI & CD'
 on:
   push:
     branches:
@@ -10,16 +10,15 @@ jobs:
   build-server:
     name: 'Build Server Image'
     runs-on: ubuntu-latest
+    needs: test-server
     steps:
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.2
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
           ref: '${{ github.head_ref }}'
+
+      - name: Copy package-lock.json to server/
+        run: cp package-lock.json server/
 
       - name: 'DockerHub Login'
         uses: docker/login-action@v2.2.0
@@ -65,6 +64,44 @@ jobs:
         run: 'curl ${{ steps.deploy.outputs.url }}/status'
 
   test-server:
+    name: 'Test Server'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: '${{ github.head_ref }}'
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+
+      - name: Install Packages
+        run: npm ci
+
+      - name: Create .env
+        working-directory: server
+        run: |
+          touch .env
+          echo -en 'PORT=4000\nALPHAVANTAGE_API_KEY=${{ secrets.GP1_ALPHAVANTAGE_API_KEY }}\nMONGO_URI=${{ secrets.GP1_MONGO_URI }}' > .env
+
+      - name: Run Tests
+        run: npm run test -w server
+
+      - name: Publish Coverage Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: Coverage Reports
+          path: 'server/coverage/'
+
+      - name: Publish Test Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Test Reports
+          path: 'server/pre-build-tests.html'
+
+  test-deployed-server:
     name: 'Test Server Deployment'
     runs-on: ubuntu-latest
     needs: deploy-server
@@ -78,7 +115,7 @@ jobs:
         run: mkdir ${{ env.SERVER_REPORTS_FOLDER }}
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.2
+        uses: actions/setup-node@v3.7.0
         with:
           node-version: '${{ env.NODE_VERSION }}'
 
@@ -93,28 +130,23 @@ jobs:
         run: |
           newman run "28563069-4f8a9d7f-f211-4250-a70a-d5af7fe5ffed" -e "28563069-f6df5499-f91c-410a-970b-531f5700edfb" --postman-api-key ${{ secrets.GP1_POSTMAN_KEY }} --delay-request 5 -x -r htmlextra --reporter-htmlextra-export ${{ env.SERVER_REPORTS_FOLDER }}/research.html --reporter-htmlextra-displayProgressBar --reporter-htmlextra-browserTitle "Research Report" --reporter-htmlextra-title "Research Results"
 
-      - name: Verify if Reports Exist
-        run: ls ${{ env.SERVER_REPORTS_FOLDER }} -a
-
       - name: Publish Postman Reports
         uses: actions/upload-artifact@v3
         with:
-          name: Server Reports
+          name: Deployment Reports
           path: '${{ env.SERVER_REPORTS_FOLDER }}/'
 
   build-client:
     name: 'Build Client Image'
     runs-on: ubuntu-latest
     steps:
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v2.5.2
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
           ref: '${{ github.head_ref }}'
+
+      - name: Copy package-lock.json to client/
+        run: cp package-lock.json client/
 
       - name: 'DockerHub Login'
         uses: docker/login-action@v2.2.0
