@@ -144,7 +144,7 @@ After a successful deployment to GCP, a series of automated tests will run to en
 
 ## Try it out
 
-To acess the deployed services, use the links below. The initial startup will be slow since Google Cloud Run will provision a machine based on requests. So, if there has been no requests it will remove all active instances.
+To access the deployed services, use the links below. The initial startup will be slow since Google Cloud Run will provision a machine based on requests. So, if there has been no requests it will remove all active instances.
 
 - Client URL: <https://client-w3vto4v6qa-uc.a.run.app>
 - Server URL: <https://server-w3vto4v6qa-uc.a.run.app/>

@@ -9,7 +9,7 @@
   | Aditya Kulkarni      | `kulka141` | `1006906680` | <aditya.kulkarni@mail.utoronto.ca>      | `Aditya Kulkarni`      |
   | Shawn Santhoshgeorge | `santhos7` | `1006094673` | <shawn.santhoshgeorge@mail.utoronto.ca> | `shawn.santhoshgeorge` |
 
-  - **All Files for Group 1 Submission can be found in [docs](https://github.com/CSCC012023/assignment-2-agile-avengers/blob/group-1/docs/assign-doc.md)**
+  - **All Files for Group 1 Submission can be found in [docs](https://github.com/CSCC012023/assignment-2-agile-avengers/blob/group-1/docs/)**
 
 - Group 2:
 
