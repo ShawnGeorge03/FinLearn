@@ -13,7 +13,7 @@ app.use('/', api);
 app.use('/webhook', webhook);
 
 app.use('/', (req: Request, res: Response): void => {
-  res.json({ message: 'Catch All Route' });
+  res.json({ message: 'Hey there, Hackermanz' });
 });
 
 export default app;
