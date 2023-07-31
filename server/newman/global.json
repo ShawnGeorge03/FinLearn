@@ -1,0 +1,15 @@
+{
+  "id": "f6a8a369-7611-4cb5-8ebe-b6af17701317",
+  "values": [
+    {
+      "key": "USER_ID",
+      "value": "user_2TAOKyOIynmI5QfZKZ7saOEnXO4",
+      "type": "secret",
+      "enabled": true
+    }
+  ],
+  "name": "Globals",
+  "_postman_variable_scope": "globals",
+  "_postman_exported_at": "2023-07-31T17:23:38.299Z",
+  "_postman_exported_using": "Postman/10.16.4"
+}

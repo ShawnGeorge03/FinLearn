@@ -1,0 +1,356 @@
+{
+  "info": {
+    "_postman_id": "4f8a9d7f-f211-4250-a70a-d5af7fe5ffed",
+    "name": "Research",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "28563069",
+    "_collection_link": "https://www.postman.com/cscc01-finlearn/workspace/finlearn/collection/28563069-4f8a9d7f-f211-4250-a70a-d5af7fe5ffed?action=share&creator=28563069&source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Symbol Search",
+      "item": [
+        {
+          "name": "Missing Query Param",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Verify Status Code is 400', function() {\r",
+                  "\tpm.response.to.have.status(400);\r",
+                  "})\r",
+                  "\r",
+                  "var jsonData = pm.response.json(); \r",
+                  "\r",
+                  "pm.test(\"Verify Fields\", function () {\r",
+                  "\tconst schema = {\r",
+                  "\t\t\"type\": \"object\",\r",
+                  "  \t\t\t\"properties\": {\r",
+                  "\t\t\t\t\"message\": { \"type\": \"string\" }\r",
+                  "  \t\t\t},\r",
+                  "\t\t\t  \"required\": [ \"message\" ]\r",
+                  "\t}\r",
+                  "\t\r",
+                  "\tpm.response.to.have.jsonSchema(schema);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify Error Message\", function () {\r",
+                  "\tpm.expect(jsonData.message).is.to.equal(\r",
+                  "\t\t\"Please provide searchText\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/symbolSearch",
+              "host": ["{{BASE_URL}}"],
+              "path": ["symbolSearch"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Blank searchText",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Verify Status Code is 400', function() {\r",
+                  "\tpm.response.to.have.status(400);\r",
+                  "})\r",
+                  "\r",
+                  "var jsonData = pm.response.json(); \r",
+                  "\r",
+                  "pm.test(\"Verify Fields\", function () {\r",
+                  "\tconst schema = {\r",
+                  "\t\t\"type\": \"object\",\r",
+                  "  \t\t\t\"properties\": {\r",
+                  "\t\t\t\t\"message\": { \"type\": \"string\" }\r",
+                  "  \t\t\t},\r",
+                  "\t\t\t  \"required\": [ \"message\" ]\r",
+                  "\t}\r",
+                  "\t\r",
+                  "\tpm.response.to.have.jsonSchema(schema);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify Error Message\", function () {\r",
+                  "\tpm.expect(jsonData.message).is.to.equal(\r",
+                  "\t\t\"Please provide searchText\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/symbolSearch?searchText=",
+              "host": ["{{BASE_URL}}"],
+              "path": ["symbolSearch"],
+              "query": [
+                {
+                  "key": "searchText",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Invalid searchText",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Verify Status Code is 400', function() {\r",
+                  "\tpm.response.to.have.status(400);\r",
+                  "})\r",
+                  "\r",
+                  "var jsonData = pm.response.json(); \r",
+                  "\r",
+                  "pm.test(\"Verify Fields\", function () {\r",
+                  "\tconst schema = {\r",
+                  "\t\t\"type\": \"object\",\r",
+                  "  \t\t\t\"properties\": {\r",
+                  "\t\t\t\t\"message\": { \"type\": \"string\" }\r",
+                  "  \t\t\t},\r",
+                  "\t\t\t  \"required\": [ \"message\" ]\r",
+                  "\t}\r",
+                  "\t\r",
+                  "\tpm.response.to.have.jsonSchema(schema);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify Error Message\", function () {\r",
+                  "\tpm.expect(jsonData.message).is.to.equal(\r",
+                  "\t\t \"Invalid searchText\");\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [""],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/symbolSearch?searchText=(test)",
+              "host": ["{{BASE_URL}}"],
+              "path": ["symbolSearch"],
+              "query": [
+                {
+                  "key": "searchText",
+                  "value": "(test)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Valid searchText",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Verify Status Code is 200', function() {\r",
+                  "\tpm.response.to.have.status(200);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test(\"Verify Fields\", function () {\r",
+                  "\tconst schema = {\r",
+                  "\t\t\"type\": \"array\",\r",
+                  "\t\t\"items\": [{\r",
+                  "\t\t\t\"type\": \"object\",\r",
+                  "\t\t\t\"properties\": {\r",
+                  "\t\t\t\t\"name\": { \"type\": \"string\" },\r",
+                  "\t\t\t\t\"symbol\": { \"type\": \"string\" },\r",
+                  "\t\t\t},\r",
+                  "\t\t\t\"required\": [ \"name\", \"symbol\" ]\r",
+                  "\t\t}]\r",
+                  "\t}\r",
+                  "\r",
+                  "\tpm.response.to.have.jsonSchema(schema);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify Data\", function () {\r",
+                  "\tconst expected = [\r",
+                  "        {\r",
+                  "            \"symbol\": \"FIND\",\r",
+                  "            \"name\": \"Findex.com Inc\"\r",
+                  "        },\r",
+                  "        {\r",
+                  "            \"symbol\": \"FIN.TRV\",\r",
+                  "            \"name\": \"European Energy Metals Corp.\"\r",
+                  "        },\r",
+                  "        {\r",
+                  "            \"symbol\": \"FINA.LON\",\r",
+                  "            \"name\": \"Fintech Asia Ltd\"\r",
+                  "        },\r",
+                  "        {\r",
+                  "            \"symbol\": \"FIND.TRV\",\r",
+                  "            \"name\": \"Baselode Energy Corp\"\r",
+                  "        },\r",
+                  "        {\r",
+                  "            \"symbol\": \"FINCABLES.BSE\",\r",
+                  "            \"name\": \"FINOLEX CABLES LTD.\"\r",
+                  "        }\r",
+                  "    ]\r",
+                  "\tconst actual = pm.response.json();\r",
+                  "\r",
+                  "\tpm.expect(actual).to.be.eql(expected);\r",
+                  "\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/symbolSearch?searchText=fin",
+              "host": ["{{BASE_URL}}"],
+              "path": ["symbolSearch"],
+              "query": [
+                {
+                  "key": "searchText",
+                  "value": "fin"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Nonexistent Symbol",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Verify Status Code is 200', function() {\r",
+                  "\tpm.response.to.have.status(200);\r",
+                  "})\r",
+                  "\r",
+                  "pm.test(\"Verify Fields\", function () {\r",
+                  "\tconst schema = { \"type\": \"array\" }\r",
+                  "\r",
+                  "\tpm.response.to.have.jsonSchema(schema);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Verify Data\", function () {\r",
+                  "\tconst expected = []\r",
+                  "\tconst actual = pm.response.json();\r",
+                  "\r",
+                  "\tpm.expect(actual).to.be.eql(expected);\r",
+                  "\r",
+                  "});\r",
+                  ""
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{BASE_URL}}/symbolSearch?searchText=testA",
+              "host": ["{{BASE_URL}}"],
+              "path": ["symbolSearch"],
+              "query": [
+                {
+                  "key": "searchText",
+                  "value": "testA"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Stock Scroller",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Verify Status Code is 200', function() {\r",
+              "\tpm.response.to.have.status(200);\r",
+              "})\r",
+              "\r",
+              "var jsonData = pm.response.json(); \r",
+              "\r",
+              "pm.test(\"Verify Fields\", function () {\r",
+              "\tconst schema = {\r",
+              "        \"type\": \"object\",\r",
+              "        \"properties\": {\r",
+              "            \"topGainers\": {\r",
+              "                \"type\": \"array\",\r",
+              "                \"items\": { \"type\": \"string\" }\r",
+              "            },\r",
+              "            \"topLosers\": {\r",
+              "                \"type\": \"array\",\r",
+              "                \"items\": { \"type\": \"string\" }\r",
+              "            },\r",
+              "            \"mostActivelyTraded\": {\r",
+              "                \"type\": \"array\",\r",
+              "                \"items\": { \"type\": \"string\" }\r",
+              "            }\r",
+              "        },\r",
+              "        \"required\": [ \"topGainers\", \"topLosers\", \"mostActivelyTraded\" ]\r",
+              "    }\r",
+              "\t\r",
+              "\tpm.response.to.have.jsonSchema(schema);\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{BASE_URL}}/topStocks",
+          "host": ["{{BASE_URL}}"],
+          "path": ["topStocks"]
+        }
+      },
+      "response": []
+    }
+  ]
+}
