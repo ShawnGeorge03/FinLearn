@@ -13,7 +13,7 @@ app.use('/', api);
 app.use('/webhook', webhook);
 
 app.use('/', (req: Request, res: Response): void => {
-  res.json({ message: 'This is GP1 Deployment' });
+  res.json({ message: 'Hi there' });
 });
 
 export default app;

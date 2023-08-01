@@ -1,4 +1,4 @@
-name: 'Group 1 CI & CD'
+name: Group 1 CI & CD
 on:
   push:
     branches:
@@ -7,18 +7,18 @@ env:
   NODE_VERSION: 18
 jobs:
   test-server:
-    name: 'Test Server'
+    name: Test Server
     runs-on: ubuntu-latest
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
 
-      - name: Setup Node.js environment
+      - name: Setup Node.js Environment
         uses: actions/setup-node@v3.7.0
         with:
-          node-version: '${{ env.NODE_VERSION }}'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install Packages
         run: npm ci
@@ -36,28 +36,28 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Coverage Reports
-          path: 'server/coverage/'
+          path: server/coverage/
 
       - name: Publish Test Results
         uses: actions/upload-artifact@v3
         with:
           name: Test Reports
-          path: 'server/pre-build-tests.html'
+          path: server/pre-build-tests.html
 
   build-server:
-    name: 'Build Server Image'
+    name: Build Server Image
     runs-on: ubuntu-latest
     needs: test-server
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
 
       - name: Copy package-lock.json to server/
         run: cp package-lock.json server/
 
-      - name: 'DockerHub Login'
+      - name: DockerHub Login
         uses: docker/login-action@v2.2.0
         with:
           username: ${{ secrets.GP1_DOCKERHUB_USERNAME }}
@@ -75,14 +75,19 @@ jobs:
           tags: ${{ secrets.GP1_DOCKERHUB_USERNAME }}/server:latest
 
   deploy-server:
-    name: 'Deploy Server Image'
+    name: Deploy Server
     runs-on: ubuntu-latest
     needs: build-server
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
+
+      - name: Request to Start Deployment
+        uses: joelwmale/webhook-action@2.3.2
+        with:
+          url: ${{ secrets.GP1_GCP_SERVER_WEBHOOK_URL}}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1.1.1
@@ -90,30 +95,26 @@ jobs:
           service_account: ${{ secrets.GP1_GCP_SA_EMAIL }}
           credentials_json: ${{ secrets.GP1_GCP_SA_KEY }}
 
-      - name: Deploy to Cloud Run
-        id: deploy
-        uses: google-github-actions/deploy-cloudrun@v1.0.2
-        with:
-          metadata: ./server/service.yaml
-          region: ${{ secrets.GP1_GCP_REGION }}
+      - name: Set up gcloud SDK Environment
+        uses: google-github-actions/setup-gcloud@v1.1.1
 
-      - name: 'Check Server Status'
-        run: 'curl ${{ steps.deploy.outputs.url }}/status'
+      - name: Verify Server Deployment
+        run: bash checkDeploy.sh ${{ secrets.GP1_GCP_REGION }} server
 
-  test-deployed-server:
-    name: 'Test Server Deployment'
+  verify-deployed-server:
+    name: Verify Server Deployment
     runs-on: ubuntu-latest
     needs: deploy-server
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
 
-      - name: Setup Node.js environment
+      - name: Setup Node.js Environment
         uses: actions/setup-node@v3.7.0
         with:
-          node-version: '${{ env.NODE_VERSION }}'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Install newman
         run: npm install -g newman newman-reporter-htmlextra
@@ -132,21 +133,21 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: Deployment Reports
-          path: 'server/newman/reports/'
+          path: server/newman/reports/
 
   build-client:
-    name: 'Build Client Image'
+    name: Build Client Image
     runs-on: ubuntu-latest
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
 
       - name: Copy package-lock.json to client/
         run: cp package-lock.json client/
 
-      - name: 'DockerHub Login'
+      - name: DockerHub Login
         uses: docker/login-action@v2.2.0
         with:
           username: ${{ secrets.GP1_DOCKERHUB_USERNAME }}
@@ -165,14 +166,19 @@ jobs:
           tags: ${{ secrets.GP1_DOCKERHUB_USERNAME }}/client:latest
 
   deploy-client:
-    name: 'Deploy Client Image'
+    name: Deploy Client
     runs-on: ubuntu-latest
-    needs: [build-client, deploy-server]
+    needs: build-client
     steps:
       - name: Checkout HEAD Commit
         uses: actions/checkout@v3.5.3
         with:
-          ref: '${{ github.head_ref }}'
+          ref: ${{ github.head_ref }}
+
+      - name: Request to Start Deployment
+        uses: joelwmale/webhook-action@2.3.2
+        with:
+          url: ${{ secrets.GP1_GCP_CLIENT_WEBHOOK_URL}}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1.1.1
@@ -180,8 +186,8 @@ jobs:
           service_account: ${{ secrets.GP1_GCP_SA_EMAIL }}
           credentials_json: ${{ secrets.GP1_GCP_SA_KEY }}
 
-      - name: Deploy to Cloud Run
-        uses: google-github-actions/deploy-cloudrun@v1.0.2
-        with:
-          metadata: ./client/service.yaml
-          region: ${{ secrets.GP1_GCP_REGION }}
+      - name: Set up gcloud SDK Environment
+        uses: google-github-actions/setup-gcloud@v1.1.1
+
+      - name: Verify Server Deployment
+        run: bash checkDeploy.sh ${{ secrets.GP1_GCP_REGION }} client

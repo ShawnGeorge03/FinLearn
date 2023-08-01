@@ -1,0 +1,17 @@
+steps:
+  - name: gcr.io/cloud-builders/gcloud
+    args:
+      - run
+      - deploy
+      - server
+      - '--image=docker.io/awhooogha/server:latest'
+      - '--region=us-central1'
+      - '--min-instances=0'
+      - '--max-instances=1'
+      - '--port=4000'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+      - >-
+        --set-secrets=MONGO_URI=MONGO_URI:latest,ALPHAVANTAGE_API_KEY=ALPHAVANTAGE_API_KEY:latest
+      - '--description=''FinLearn API Server'''
+    entrypoint: gcloud
