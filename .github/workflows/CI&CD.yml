@@ -80,15 +80,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: build-server-image
     steps:
-      - name: Checkout HEAD Commit
-        uses: actions/checkout@v3.5.3
-        with:
-          ref: ${{ github.head_ref }}
-
       - name: Request to Start Build
         uses: joelwmale/webhook-action@2.3.2
         with:
           url: ${{ secrets.GP1_GCP_SERVER_WEBHOOK_URL}}
+
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1.1.1
@@ -169,15 +169,15 @@ jobs:
     runs-on: ubuntu-latest
     needs: [build-client-image, deploy-server-image]
     steps:
-      - name: Checkout HEAD Commit
-        uses: actions/checkout@v3.5.3
-        with:
-          ref: ${{ github.head_ref }}
-
       - name: Request to Start Build
         uses: joelwmale/webhook-action@2.3.2
         with:
           url: ${{ secrets.GP1_GCP_CLIENT_WEBHOOK_URL}}
+
+      - name: Checkout HEAD Commit
+        uses: actions/checkout@v3.5.3
+        with:
+          ref: ${{ github.head_ref }}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v1.1.1
