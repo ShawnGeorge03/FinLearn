@@ -8,6 +8,9 @@
 - `docker-compose.yml`
   - This file used to define the configuration for `docker compose` command.
   - It is used to build, deploy, and push images from a local machine.
+- `checkDeploy.sh`
+  - Take 2 arguments: `<region>` `<client|server>`.
+  - This script is only used by GitHub Actions to check if a new build has been successfully deployed in a specific region.
 
 ### Client
 
@@ -24,12 +27,12 @@
   - We make use of Multistage Builds to reduce the overall size of the Docker Image, for more information on the implementation please check the respective Dockerfile. It eliminates unwanted layers, and copies over only the required files for the image to deploy.
   - This build requires an argument called `SEVER_URL` which will be used by the script below.
   - `replaceURL.sh`
-    - This file is only used inside of this Dockerfile
+    - This file is only used inside of this Dockerfile and requires 1 argument `SEVER_URL`
     - The purpose of this script is to identify all `*.tsx` files in the client folder and replace each instance of `${process.env.NEXT_PUBLIC_API_URL}` with the provided argument `SEVER_URL`.
     - We tried other methods like multiple `.env` files for local and production environments, specific Next.js changes in the `next.config.js` but none worked when the image was deployed.
-- `service.yaml`
-  - This file contains all the configuration required to deploy a Google Cloud Run Service.
-  - For more information, here is the [YAML Reference](https://cloud.google.com/run/docs/reference/yaml/v1).
+- `cloudbuild.yaml`
+  - This file is the build configuration used by Cloud Build to deploy a Cloud Run Service for the client.
+  - For more information, here is the [YAML Reference](https://cloud.google.com/build/docs/build-config-file-schema).
 
 ### Server
 
@@ -38,16 +41,17 @@
 - Created `.dockerignore`.
 - `Dockerfile`
   - We make use of Multistage Builds to reduce the overall size of the Docker Image, for more information on the implementation please check the respective Dockerfile. It eliminates unwanted layers, and copies over only the required files for the image to deploy.
-- `service.yaml`
-  - This file contains all the configuration required to deploy a Google Cloud Run Service.
-  - For more information, please refer the [YAML Reference](https://cloud.google.com/run/docs/reference/yaml/v1).
+- `cloudbuild.yaml`
+  - This file is the build configuration used by Cloud Build to deploy a Cloud Run Service for the server.
+  - For more information, here is the [YAML Reference](https://cloud.google.com/build/docs/build-config-file-schema).
 - Created a Jest Test Runner to be used to verify code changes before a build is initiated.
+- Created a Nodemon Config to ignore changes in the `test` folder
 
 ### DockerHub
 
 - Created two public repositories to store images for the client and server builds.
 - Tag Management
-  - `latest`: Refers to the latest build pushed from from a GitHub Action Run.
+  - `latest`: Refers to the latest build pushed from a GitHub Action Run.
   - `v{MAJOR.MINOR.PATCH}`: Refers to a new build based on Semver being pushed from a local machine.
 
 ### Google Cloud Platform
@@ -58,22 +62,28 @@
   - It provides versioning to keep track of changes to the values, automatic replication to maintain consistency, and logging to keep track of usage.
 - Google Cloud Run
   - Provides a service to deploy containerized applications that can automatically scale according to traffic.
+- Cloud Build
+  - Provides a service to execute builds on Google Cloud based on a provided build configuration.
+  - It will start a build when it receives a Webhook request using the specific URL that have been configured with.
 - Service Accounts
   - Used to manage access to resources on the Google Cloud.
   - They are used to create, read, update, and delete a specific service that it can access.
 
 ### GitHub Secrets
 
-- `GP1_SERVER_URL`: Production URL of the Server
-- `GP1_ALPHAVANTAGE_API_KEY`: API Key used for authentication with Alpha Vantage
-- `GP1_MONGO_URI`: API Key used for authentication with MongoDB Atlas Database
+- Environment Variables
+  - `GP1_ALPHAVANTAGE_API_KEY`: API Key used for authentication with Alpha Vantage
+  - `GP1_MONGO_URI`: API Key used for authentication with MongoDB Atlas Database
 - DockerHub
   - `GP1_DOCKERHUB_USERNAME`: DockerHub Username
-  - `GP1_DOCKER_TOKEN`: DockerHub Personal Access Token
+  - `GP1_DOCKERHUB_TOKEN`: DockerHub Personal Access Token
 - Google Cloud Platform
   - `GP1_GCP_REGION`: Specific geographical location to host the instance
   - `GP1_GCP_SA_EMAIL`: GCP Service Account Email
   - `GP1_GCP_SA_KEY`: GCP service Account Credentials
+  - `GP1_GCP_SERVER_URL`: Production URL of the Server
+  - `GP1_GCP_CLIENT_WEBHOOK_URL`: Webhook URL to Trigger Client Build using Cloud Build
+  - `GP1_GCP_SERVER_WEBHOOK_URL`: Webhook URL to Trigger Server Build using Cloud Build
 - Postman
   - `GP1_POSTMAN_KEY`: Postman API Key
 
@@ -87,7 +97,7 @@
    2. Build & Push Images to DockerHub
    3. Deploy Server on Google Cloud
    4. Deploy Client on Google Cloud
-   5. Run Deployment Tests
+   5. Run Deployment Tests (Only for Server)
 3. Publish Artifacts.
 
 ### Pre Build Tests
@@ -101,11 +111,14 @@ When a change is pushed to GitHub, a GitHub Action for is triggered to run test 
   3. Install all packages via npm.
   4. Create `.env` file using the values stored on Github Secrets.
   5. Run the Jest Test Runner.
-  6. Collect and Publish the Coverage Report as an Artifacts.
+  6. Collect and Publish the Coverage Report & Test Results as Artifacts.
 
 ### Building & Pushing Images
 
-When a change is pushed to GitHub, a GitHub Action for building the new docker images is triggered. The new client and server images are then pushed to the DockerHub registry on a successful build.
+When a change is pushed to GitHub, a GitHub Action for building the new Docker images is triggered. The new client and server images are then pushed to the DockerHub Registry on a successful build.
+
+One distinction here is that, the server image will only be built if it passes
+all the test cases mentioned above.
 
 - Steps:
 
@@ -119,15 +132,17 @@ When a change is pushed to GitHub, a GitHub Action for building the new docker i
 
 ### Deploying to Google Cloud
 
-After a successful push to DockerHub, instances of client and server are built using Google Cloud Run.
+After a successful push to DockerHub, a webhook request is sent to Google Cloud Build to start the build process which will create a new Google Cloud Run Service and deploy it.
+
+One distinction here is that, the server image will always be deployed before the client image. The client image will deploy if the server has been successfully deployed. This ensures that when the client is deployed the appropriate server is already available, thus providing a smoother user experience.
 
 - Steps:
 
   1. Checkout the latest changes based on the `HEAD_REF`.
-  2. Login into Google Cloud Platform as the Service Account using the credentials stored in GitHub Secrets.
-  3. Send Request to GCP to create a new revision of the current service
-     based on the respective `service.yaml` file and region to be deployed which is stored in GitHub Secrets.
-  4. (Only for Server Deployment) Send a Request to `/status`
+  2. Send a Webhook Request to Cloud Build to start building a new Cloud Run service
+  3. Login into Google Cloud Platform as the Service Account using the credentials stored in GitHub Secrets.
+  4. Install and Setup gcloud CLI
+  5. Runs the `checkDeploy.sh` script to verify if the new service has deployed to the region which is stored in GitHub Secrets.
 
 ### Run Deployment Tests
 
