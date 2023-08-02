@@ -24,7 +24,7 @@ describe('Test /courses', () => {
     ];
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toMatchObject(expected);
+    expect(res.body).toEqual(expect.arrayContaining(expected));
   });
 
   test('Internal Server Error', async () => {
