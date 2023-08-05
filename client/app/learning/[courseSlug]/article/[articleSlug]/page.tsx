@@ -3,6 +3,7 @@ import {
   Accordion,
   Box,
   Container,
+  HStack,
   Heading,
   Spinner,
   Text,
@@ -11,6 +12,8 @@ import {
   WrapItem,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+
+import FavoriteButton from '@/components/FavoriteButton';
 
 import ArticleImage from '@/components/ContentArticle/ArticleImage';
 import BlogAuthor from '@/components/ContentArticle/BlogAuthor';
@@ -21,6 +24,7 @@ import styles from '@/styles/pages/Article.module.scss';
 import { ErrorResponse } from '@/types/base';
 import { CourseWithUnits } from '@/types/components/Dashboard-Learning/types';
 import { Article } from '@/types/learning';
+import { useAuth } from '@clerk/nextjs';
 
 type ArticleProps = {
   params: {
@@ -31,9 +35,49 @@ type ArticleProps = {
 
 const ArticleList = ({ params }: ArticleProps) => {
   const { center, container, title, unitLists } = styles;
-
+  const { userId } = useAuth();
   const [article, setArticle] = useState<Article>();
   const [course, setCourse] = useState<CourseWithUnits>();
+  const [articleProgressPercent, setArticleProgress] = useState(0);
+
+  const patchProgress = async () => {
+    try {
+      const requestBody = {
+        userID: userId,
+        articleSlug: params.articleSlug,
+        articleProgressPercent: 100,
+      };
+      const fetchOptions = {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json', // Specifying JSON content in the headers
+        },
+        body: JSON.stringify(requestBody), // Convert the object to JSON string
+      };
+
+      const updateResponse = await fetch(
+        'http://localhost:4000/articleProgress',
+        fetchOptions,
+      );
+
+      if (updateResponse.ok)
+        // Progress updated successfully
+        setArticleProgress(100); // Update the local progress state
+      else {
+        const error: ErrorResponse = await updateResponse.json();
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const [color, setColor] = useState<'gray' | 'yellow'>('gray');
+  const [isFavourited, setIsFavourited] = useState<boolean>(false);
+
+  useEffect(() => {
+    setColor(isFavourited ? 'yellow' : 'gray');
+  }, [isFavourited]);
 
   const getCourseWithUnits = async () => {
     try {
@@ -60,8 +104,57 @@ const ArticleList = ({ params }: ArticleProps) => {
       if (response.ok) {
         const data: Article = await response.json();
         setArticle(data);
+        setIsFavourited(data.isFavourited);
       } else {
         const error: ErrorResponse = await response.json();
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const toggleIsFavorite = async () => {
+    const data = {
+      slug: article?.slug,
+    };
+
+    const requestOptions = {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    };
+
+    try {
+      const response: Response = await fetch(
+        `http://localhost:4000/toggleFavoriteArticle`,
+        requestOptions,
+      );
+      if (response.ok) {
+        const data: Article = await response.json();
+        setIsFavourited(data.isFavourited);
+      } else {
+        const error: ErrorResponse = await response.json();
+        console.error(error);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const getProgress = async () => {
+    try {
+      const progressResponse = await fetch(
+        `http://localhost:4000/progress/article?userID=${userId}&articleSlug=${params.articleSlug}`,
+      );
+      if (progressResponse.ok) {
+        const progressData = await progressResponse.json();
+        setArticleProgress(progressData.progressPercent);
+        if (articleProgressPercent != 100) await patchProgress();
+      } else {
+        const error: ErrorResponse = await progressResponse.json();
         console.error(error);
       }
     } catch (error) {
@@ -73,6 +166,7 @@ const ArticleList = ({ params }: ArticleProps) => {
   useEffect(() => {
     getCourseWithUnits();
     getArticle();
+    getProgress();
   }, [params]);
 
   if (!course && !article)
@@ -87,6 +181,20 @@ const ArticleList = ({ params }: ArticleProps) => {
         />
         <Text>Loading Article</Text>
       </div>
+    );
+
+  if (!userId || userId == null)
+    return (
+      <Spinner
+        alignSelf="center"
+        color="blue.500"
+        emptyColor="gray.200"
+        justifyContent="center"
+        marginTop="240"
+        size="xl"
+        speed="0.65s"
+        thickness="4px"
+      />
     );
 
   return (
@@ -107,7 +215,14 @@ const ArticleList = ({ params }: ArticleProps) => {
         </Accordion>
       </div>
       <Container maxW={'7xl'}>
-        <Heading>{article?.name}</Heading>
+        <HStack>
+          <Heading>{article?.name}</Heading>
+          <FavoriteButton
+            color={color}
+            onClickButton={toggleIsFavorite}
+            size="sm"
+          />
+        </HStack>
 
         <Box>
           <BlogAuthor
@@ -125,6 +240,7 @@ const ArticleList = ({ params }: ArticleProps) => {
             </Box>
           </WrapItem>
         </Wrap>
+
         <VStack
           alignItems="flex-start"
           paddingTop="20px"

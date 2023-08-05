@@ -1,6 +1,18 @@
+@import '../abstracts/mixins';
+
 .divider {
   background: #000;
   border: 0.8px solid black;
   width: 91%;
   align-self: center;
+}
+
+.wrapper {
+  display: none !important;
+}
+
+@include geq(400px) {
+  .wrapper {
+    display: block !important;
+  }
 }

@@ -6,15 +6,17 @@ type useDebounceProps = {
   callback: () => void;
 };
 
-export function useDebounce({ value, timeout, callback }: useDebounceProps) {
-  const [timer, setTimer] = useState(null);
+function useDebounce({ value, timeout, callback }: useDebounceProps) {
+  const [timer, setTimer] = useState<number>();
 
   useEffect(() => {
     if (timer) clearTimeout(timer);
 
     if (value && callback) {
-      const newTimer = setTimeout(callback, timeout);
+      const newTimer = window.setTimeout(callback, timeout);
       setTimer(newTimer);
     }
   }, [value]);
 }
+
+export default useDebounce;

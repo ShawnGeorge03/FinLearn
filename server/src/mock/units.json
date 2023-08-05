@@ -1,0 +1,59 @@
+[
+  {
+    "name": "What is a Stock Market ?",
+    "content": [
+      "article/Stock Market",
+      "video/How does the stock market work? - Oliver Elfenbaum"
+    ]
+  },
+  {
+    "name": "How to analyze an IPO ?",
+    "content": [
+      "video/Top 5 Tips to Analyze an IPO the Best Way",
+      "article/How to analyze an IPO ?",
+      "video/Top 10 Analysis Parameters for IPOs"
+    ]
+  },
+  {
+    "name": "Market Capitalization",
+    "content": ["video/Market Capitalization of Stocks"]
+  },
+  {
+    "name": "Emergency Fund",
+    "content": [
+      "video/Financial Planning: Emergency Funds Explained",
+      "video/Building An Emergency Fund",
+      "video/The 7 Baby Steps Explained"
+    ]
+  },
+  {
+    "name": "How to save",
+    "content": [
+      "article/How to Save: Strategies for Saving Money Each Month",
+      "article/A Canadian Money Saver Guide for Beginners",
+      "article/A Complete Beginner's Guide to Saving Money"
+    ]
+  },
+  {
+    "name": "Trading for Beginners",
+    "content": [
+      "video/How to Read the Candlestick Chart",
+      "video/Trading Indicators Explained"
+    ]
+  },
+  {
+    "name": "What is Fundamental Analysis",
+    "content": [
+      "video/Profit & Loss, Balance Sheet",
+      "video/Economy And Industry Analysis",
+      "article/What is Fundamental Analysis ?"
+    ]
+  },
+  {
+    "name": "Examples of Fundamental Analysis",
+    "content": [
+      "video/ITC Ltd. Fundamental Analysis",
+      "video/SBI Card IPO Review"
+    ]
+  }
+]

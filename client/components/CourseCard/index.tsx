@@ -1,14 +1,6 @@
 'use client';
 
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Flex,
-  Image,
-  Link,
-  Text,
-} from '@chakra-ui/react';
+import { Card, CardBody, Flex, Image, Link, Text } from '@chakra-ui/react';
 
 import { Course } from '@/types/learning';
 
@@ -23,15 +15,15 @@ const CourseCard = ({ name, slug, icon }: Course) => {
           cursor={'pointer'}
           height={250}
           width={250}>
-          <CardHeader></CardHeader>
           <CardBody>
             <Flex
               alignItems={'center'}
               direction="column"
+              height={'100%'}
               justifyContent={'center'}>
               <Text
                 align="center"
-                fontSize="3xl"
+                fontSize="2xl"
                 fontWeight={'bold'}>
                 {name}
               </Text>

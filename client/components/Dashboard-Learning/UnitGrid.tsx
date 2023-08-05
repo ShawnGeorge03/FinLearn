@@ -23,9 +23,7 @@ const UnitGrid = ({ units, courseSlug, userUnits }: UnitGridParams) => {
   };
   return (
     <SimpleGrid
-      boxShadow="m"
       columns={{ sm: 1, md: 2, lg: 3 }}
-      m={3}
       spacing={4}>
       {units.map((unit) => (
         <UnitCard

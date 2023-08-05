@@ -42,7 +42,12 @@ const VideoSchema = new Schema<Video>(
       type: String,
       required: true,
       immutable: true,
-      default: 'article',
+      default: 'video',
+    },
+    isFavourited: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   {

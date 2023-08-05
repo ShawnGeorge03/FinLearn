@@ -6,8 +6,13 @@ type RequestErrorTypes =
   | 'InvalidUserID'
   | 'MissingSlug'
   | 'InvalidSlug'
+  | 'InvalidTradeOrder'
+  | 'InvalidTradeStockQuantity'
+  | 'InvalidTickerSymbol'
+  | 'AlphaVantageError'
   | 'ParentUnitNotFound'
-  | 'ParentCourseNotFound';
+  | 'ParentCourseNotFound'
+  | 'PortfolioDoesNotExist';
 
 // Database Error will be used to handle Mongo Query related Errors
 type DatabaseErrorTypes =

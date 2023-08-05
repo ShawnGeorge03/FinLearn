@@ -7,7 +7,7 @@ import modelProgress from '../../models/Learning/progress';
 import modelUnit from '../../models/Learning/unit';
 import modelVideo from '../../models/Learning/video';
 
-import { Article, Unit, Video } from '../../types/learning';
+import { Article, Course, Unit, Video } from '../../types/learning';
 
 import { createError } from '../../utils/error';
 import { validateInput, validateUserID } from '../../utils/validate';
@@ -58,10 +58,10 @@ export const getAllUnitsBySlug = async (req: Request, res: Response) => {
           contents: await Promise.all(
             unit.content.map(async (id) => {
               const requiredFields = 'name slug contentType';
-              const video: Video | null = await modelVideo
+              const video = await modelVideo
                 .findById(id)
                 .select(requiredFields);
-              const article: Article | null = await modelArticle
+              const article = await modelArticle
                 .findById(id)
                 .select(requiredFields);
               return video ? video : article;
@@ -149,5 +149,14 @@ export const getAllUnitProgress = async (req: Request, res: Response) => {
       .json(
         createError('InternalServerError', 'Failed to retrieve User Progress'),
       );
+  }
+};
+
+export const getCourseFromUnit = async (unit: Unit) => {
+  try {
+    const course = await modelCourse.findOne<Course>({ units: unit._id });
+    return course;
+  } catch (error) {
+    console.error('Cannot retrieve course from unit!');
   }
 };

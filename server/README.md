@@ -18,6 +18,7 @@ The main entry point of the server is the [`server.ts`](https://github.com/CSCC0
 | ------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `configs`     | Allows connection to MongoDB Atlas.                                                                                             |
 | `controllers` | Contains all the Controller functions to process requests with the database and if required send a JSON response to the Client. |
+| `mock`        | Contains all the Mock Data JSON for Database.                                                                                   |
 | `middlewares` | Contains any code for any middleware like authentication and logging.                                                           |
 | `models`      | Contains all the MongoDB Schema that will be need for the database.                                                             |
 | `routes`      | Contains all the supported endpoints for each router used.                                                                      |
@@ -33,3 +34,4 @@ These are all the commands that can be run
 - `npm run build`: Compile the Code
 - `npm run lint`: Runs ESLint on Code
 - `npm run lint:fix`: Runs ESLint and makes fixes
+- `npm run seed <model>`: Seeds the Database with Mock Data for a specific model (`learning`, `trading`)

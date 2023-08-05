@@ -4,9 +4,10 @@ import modelCourse from '../../models/Learning/course';
 import modelProgress from '../../models/Learning/progress';
 import modelUnit from '../../models/Learning/unit';
 import modelVideo from '../../models/Learning/video';
-import { Video } from '../../types/learning';
+import { Unit, Video } from '../../types/learning';
 import { createError } from '../../utils/error';
 import { validateInput, validateUserID } from '../../utils/validate';
+import { getCourseFromUnit } from './units';
 
 /**
  * Retrieves a Video with a matching `videoSlug`
@@ -308,4 +309,87 @@ export const updateVideoProgress = async (req: Request, res: Response) => {
   updatedObject.isNew = false;
   await updatedObject?.save();
   return res.send(updatedObject);
+};
+
+export const getUnitFromVideo = async (video: Video) => {
+  try {
+    const unit = await modelUnit.findOne<Unit>({ content: video._id });
+    return unit;
+  } catch (error) {
+    console.error('Cannot retrieve unit from video!');
+  }
+};
+
+export const getFavouriteVideos = async (req: Request, res: Response) => {
+  try {
+    const favouriteVideos = await modelVideo.find<Video>({
+      isFavourited: true,
+    });
+
+    const data: any = [];
+    if (favouriteVideos) {
+      await Promise.all(
+        favouriteVideos.map(async (itemVideo: Video) => {
+          try {
+            const unit = await getUnitFromVideo(itemVideo);
+            if (unit) {
+              const course = await getCourseFromUnit(unit);
+              if (course)
+                data.push({
+                  video: itemVideo,
+                  courseSlug: course?.slug,
+                });
+            }
+          } catch (error) {
+            res
+              .status(500)
+              .json(
+                createError(
+                  'InternalServerError',
+                  'Failed to retrieve relevant details from each video!',
+                ),
+              );
+          }
+        }),
+      );
+      return res.status(200).json(data);
+    }
+    res
+      .status(500)
+      .json(
+        createError(
+          'InternalServerError',
+          'Failed to retrieve relevant details from each video!',
+        ),
+      );
+  } catch (error) {
+    res
+      .status(500)
+      .json(
+        createError(
+          'InternalServerError',
+          'Failed to retrieve Favourite Videos',
+        ),
+      );
+  }
+};
+
+export const toggleFavoriteVideo = async (req: Request, res: Response) => {
+  const video: Video | null = await modelVideo.findOne<Video>({
+    slug: req.body.slug,
+  });
+
+  if (!video)
+    return res.status(400).json({ error: 'Missing slug in request body' });
+
+  try {
+    const updatedVideo = await modelVideo.findOneAndUpdate(
+      { slug: video.slug },
+      { isFavourited: !video.isFavourited },
+      { new: true },
+    );
+    res.status(200).send(updatedVideo);
+  } catch (error) {
+    res.status(500).json(createError('InternalServerError', 'Toggle Fail'));
+  }
 };

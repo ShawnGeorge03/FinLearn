@@ -17,8 +17,12 @@ const Sidebar = ({
   selectedCourse,
   setSelectedCourse,
 }: SideBarProps) => {
+  const { wrapper } = styles;
+
   return (
-    <Card bg="brand.gray">
+    <Card
+      bg="brand.gray"
+      className={wrapper}>
       {userCourses.length > 0 && (
         <>
           <DisplayCourses

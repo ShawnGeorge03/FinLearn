@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Introduction to the Stock Market",
+    "icon": "https://cdn-icons-png.flaticon.com/512/2910/2910311.png",
+    "content": [
+      "What is a Stock Market ?",
+      "How to analyze an IPO ?",
+      "Market Capitalization"
+    ]
+  },
+  {
+    "name": "Personal Finance 101",
+    "icon": "https://cdn-icons-png.flaticon.com/512/3490/3490961.png",
+    "content": ["Emergency Fund", "How to save"]
+  },
+  {
+    "name": "Technical Analysis",
+    "icon": "https://cdn-icons-png.flaticon.com/512/2737/2737450.png",
+    "content": ["Trading for Beginners"]
+  },
+  {
+    "name": "Fundamental Analysis",
+    "icon": "https://cdn-icons-png.flaticon.com/512/1239/1239701.png",
+    "content": [
+      "What is Fundamental Analysis",
+      "Examples of Fundamental Analysis"
+    ]
+  }
+]

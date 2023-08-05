@@ -1,11 +1,12 @@
 import { createError } from './error';
 
-type InputTypes = 'user' | 'text' | 'slug';
+type InputTypes = 'user' | 'text' | 'slug' | 'symbol';
 
 const validInputRegex: Record<InputTypes, RegExp> = {
   user: /^user_[A-z0-9]+/,
   text: /^[a-zA-Z0-9&]+$/,
   slug: /^[a-z0-9-]+$/,
+  symbol: /^[A-Z0-9.]{1,10}$/,
 };
 
 /**
@@ -95,4 +96,74 @@ export const validateInput = (
     return { status: false, error: createError('InvalidSlug', errorMsg) };
 
   return { status: true, error: {} };
+};
+
+export const validateStockQuantity = (quantity: string) => {
+  if (quantity === undefined)
+    return {
+      status: false,
+      error: createError(
+        'MissingBodyParams',
+        'The request params requires quantity',
+      ),
+    };
+
+  if (quantity === null || parseInt(quantity) <= 0)
+    return {
+      status: false,
+      error: createError(
+        'InvalidTradeStockQuantity',
+        'quantity must be greater than 0',
+      ),
+    };
+
+  return { status: true, error: {} };
+};
+
+export const validateTradeOrder = (
+  userID: string,
+  symbol: string,
+  quantity: string,
+  order: string,
+) => {
+  // Missing Body
+  if (!userID && !symbol && !quantity && !order)
+    return {
+      status: false,
+      error: createError(
+        'MissingBodyParams',
+        'Requires the following fields: [userID, symbol, order, quantity]',
+      ),
+    };
+
+  // Verify UserID
+  const userIDValidation = validateUserID(userID, false);
+  if (!userIDValidation.status) return { ...userIDValidation };
+
+  // Verify Symbol
+  const symbolValidation = validateInput('symbol', symbol, 'symbol');
+  if (!symbolValidation.status) return { ...symbolValidation };
+
+  // Verify Quantity
+  const quantityValidation = validateStockQuantity(quantity);
+  if (!quantityValidation.status) return { ...quantityValidation };
+
+  // Verify Order
+  if (order !== 'market')
+    return {
+      status: false,
+      error: createError(
+        'InvalidTradeOrder',
+        'Stocks can only be traded using `market` order',
+      ),
+    };
+
+  return {
+    status: true,
+    error: {},
+    userID,
+    symbol,
+    order,
+    quantity: parseInt(quantity),
+  };
 };

@@ -1,0 +1,157 @@
+@import '../abstracts/mixins';
+
+.center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  margin: 1.5em;
+
+  h1,
+  a {
+    padding-bottom: 1rem;
+    margin-bottom: 5vh;
+  }
+
+  .searchWrapper {
+    display: flex;
+    margin-bottom: 3vh;
+
+    .accountInfo {
+      width: 85vw;
+      height: 10vh;
+      border-radius: 0.75rem;
+      background: #d9d9d9;
+      display: grid;
+      grid-template-columns: repeat(2, auto);
+      margin-top: 11vh;
+
+      .info {
+        color: #000;
+        font-family: Josefin Sans;
+        text-align: center;
+
+        &.valueName {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        &.valueText {
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  .tradeContainer {
+    .optionsWrapper {
+      display: flex;
+      flex-direction: column;
+
+      .orderWrapper {
+        margin-bottom: 10%;
+      }
+    }
+
+    .amountsWrapper {
+      display: flex;
+      align-items: flex-end;
+      margin: 10% 0;
+
+      .showMax {
+        padding-inline: 20vw;
+      }
+    }
+
+    .buttonWrapper {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+}
+
+@include geq(390px) {
+  .container {
+    .tradeContainer {
+      .optionsWrapper {
+        flex-direction: row;
+
+        .orderWrapper {
+          margin-bottom: 0;
+          margin-right: 10%;
+        }
+      }
+
+      .amountsWrapper {
+        justify-content: space-between;
+        margin: 8% 0;
+
+        .amountContainer {
+          max-width: 45%;
+        }
+      }
+    }
+  }
+}
+
+@include geq(600px) {
+  .container .tradeContainer .amountsWrapper .showMax {
+    padding-inline: 10vw;
+  }
+}
+
+@include geq(790px) {
+  .container {
+    .searchWrapper {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 3vh;
+
+      .accountInfo {
+        margin-left: 60vw;
+        margin-top: 0;
+      }
+    }
+
+    .tradeWrapper {
+      display: flex;
+      flex-direction: row-reverse;
+      justify-content: space-between;
+
+      .tradeContainer {
+        width: 60%;
+        margin-right: 2vw;
+      }
+
+      .symbolInfo {
+        width: 38%;
+        overflow: clip;
+      }
+    }
+  }
+}
+
+@include geq(1080px) {
+  .container {
+    .headingWrapper {
+      display: flex;
+    }
+
+    .tradeContainer .amountsWrapper {
+      margin: 5% 0;
+
+      .showMax {
+        padding-inline: 6vw;
+        margin-right: 15%;
+      }
+    }
+  }
+}

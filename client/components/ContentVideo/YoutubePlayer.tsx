@@ -32,12 +32,12 @@ const YoutubePlayer = ({
     },
   });
 
-  const _onPlay: YouTubeProps['onStateChange'] = (_event) => {
+  const _onPlay: YouTubeProps['onStateChange'] = () => {
     if (interval.current != null && interval.current.currentTimer != null)
       clearInterval(interval.current.currentTimer);
     interval.current.currentTimer = setInterval(patchProgress, 5000);
   };
-  const _onPause: YouTubeProps['onStateChange'] = (_event) => {
+  const _onPause: YouTubeProps['onStateChange'] = () => {
     if (interval.current.currentTimer != null) {
       clearInterval(interval.current.currentTimer);
       interval.current.currentTimer = null;

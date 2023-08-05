@@ -9,7 +9,7 @@ import { load } from 'ts-dotenv';
 export const connectDB = async () => {
   const { MONGO_URI } = load({ MONGO_URI: String });
   try {
-    await connect(MONGO_URI);
+    await connect(MONGO_URI, { dbName: 'mock' });
     console.info('MongoDB is connected 🟢');
   } catch (err) {
     console.error('MongoDB is not connected 🔴 \n', err);

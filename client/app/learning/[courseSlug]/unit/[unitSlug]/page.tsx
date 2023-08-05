@@ -18,6 +18,8 @@ import { IoVideocamOutline } from '@react-icons/all-files/io5/IoVideocamOutline'
 import { useEffect, useState } from 'react';
 
 import styles from '@/styles/pages/Unit.module.scss';
+
+import { ErrorResponse } from '@/types/base';
 import {
   CourseWithUnits,
   UnitProgressData,
@@ -70,8 +72,13 @@ export default function UnitPage({ params }: CourseProps) {
       const response = await fetch(
         `http://localhost:4000/unitsProgress?userID=${userId}`,
       );
-      const data: UnitProgressData[] = await response.json();
-      setAllUnitsProgress(data);
+      if (response.ok) {
+        const data: UnitProgressData[] = await response.json();
+        setAllUnitsProgress(data);
+      } else {
+        const error: ErrorResponse = await response.json();
+        console.error(error);
+      }
     } catch (error) {
       setAllUnitsProgress(undefined);
       console.error((error as Error).message);
@@ -99,10 +106,11 @@ export default function UnitPage({ params }: CourseProps) {
 
   const unit = course.units.find(({ slug }) => slug === selectedUnit);
 
-  const unitProgress = () => {
-    if (JSON.stringify(allUnitsProgress) === '{}') return 0;
-    const data = allUnitsProgress?.find(({ slug }) => slug === selectedUnit);
-    return data?.progress || 0;
+  const getUnitProgress = () => {
+    return allUnitsProgress
+      ? allUnitsProgress.find(({ slug }) => slug === selectedUnit)?.progress ||
+          0
+      : 0;
   };
 
   if (course && !unit)
@@ -124,10 +132,10 @@ export default function UnitPage({ params }: CourseProps) {
           hasStripe
           max={unit?.contents.length}
           min={0}
-          value={unitProgress()}
+          value={getUnitProgress()}
         />
         <Text>
-          {unitProgress()}/{unit?.contents.length} points
+          {getUnitProgress()}/{unit?.contents.length} points
         </Text>
       </div>
       <div className={unitWrapper}>

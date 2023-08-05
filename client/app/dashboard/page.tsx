@@ -1,7 +1,27 @@
 'use client';
-import { Grid, GridItem, Spinner } from '@chakra-ui/react';
 
+import { StarIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Grid,
+  GridItem,
+  Link,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
+import { useAuth } from '@clerk/nextjs';
+import { useEffect, useState } from 'react';
+
+import Sidebar from '@/components/Dashboard-Learning/Sidebar';
 import UnitGrid from '@/components/Dashboard-Learning/UnitGrid';
+
+import styles from '@/styles/pages/Dashboard.module.scss';
+
+import { ErrorResponse } from '@/types/base';
 import {
   CourseWithUnits,
   Unit,
@@ -11,11 +31,6 @@ import {
   LearningProgressResponse,
   UnitWithProgress,
 } from '@/types/learning';
-import { useAuth } from '@clerk/nextjs';
-import { useEffect, useState } from 'react';
-import Sidebar from '../../components/Dashboard-Learning/Sidebar';
-import styles from '../../styles/pages/Dashboard.module.scss';
-import { ErrorResponse } from '@/types/base';
 
 const DashboardPage = () => {
   const { userId } = useAuth();
@@ -130,7 +145,31 @@ const DashboardPage = () => {
             userCourses={userCourses}
           />
         </GridItem>
-        <GridItem colSpan={2}>
+
+        <Flex maxHeight={'200px'}>
+          <Card variant={'filled'}>
+            <CardHeader>
+              <Flex justifyContent={'space-between'}>
+                <StarIcon
+                  color={'orange'}
+                  justifySelf={'flex-end'}
+                />
+              </Flex>
+            </CardHeader>
+            <CardBody>
+              <Flex
+                alignItems={'center'}
+                justifyContent={'center'}>
+                <Link href="/dashboard/favourites">
+                  <Button colorScheme="yellow">Go to Favourites</Button>
+                </Link>
+              </Flex>
+              <Text mt={2}>Access your favourite articles and videos!</Text>
+            </CardBody>
+          </Card>
+        </Flex>
+
+        <GridItem className={styles.courses}>
           {isUnitGridReady && units && selectedCourse ? (
             <UnitGrid
               courseSlug={selectedCourse.slug}

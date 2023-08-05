@@ -1,3 +1,5 @@
+@import '../abstracts/mixins';
+
 .center {
   position: fixed;
   top: 50%;
@@ -7,4 +9,14 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
+}
+
+.courses {
+  grid-column: span 3 / span 2;
+}
+
+@include geq(400px) {
+  .courses {
+    grid-column: span 2 / span 2;
+  }
 }

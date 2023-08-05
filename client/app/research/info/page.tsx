@@ -1,6 +1,12 @@
 'use client';
 
-import { Box, Flex, Heading } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
 import {
   AdvancedRealTimeChart,
@@ -9,8 +15,6 @@ import {
 
 import SymbolSearch from '@/components/SymbolSearch';
 
-import styles from '@/styles/pages/ResearchInfo.module.scss';
-
 type ResearchInfoProps = {
   searchParams: {
     tvwidgetsymbol: string;
@@ -18,7 +22,6 @@ type ResearchInfoProps = {
 };
 
 export default function ResearchInfoPage({ searchParams }: ResearchInfoProps) {
-  const { container, searchWrapper } = styles;
   const router = useRouter();
 
   const parseSymbol = (tvwidgetsymbol: string) => {
@@ -43,7 +46,26 @@ export default function ResearchInfoPage({ searchParams }: ResearchInfoProps) {
         marginLeft={'10px'}
         marginTop={10}>
         {symbol}
+        <Flex
+          alignItems="right"
+          h="10vh"
+          justifyContent="flex-end"
+          marginRight={8}>
+          <Button
+            _hover={{
+              transform: 'translateY(-2px)',
+              boxShadow: 'lg',
+            }}
+            bg={useColorModeValue('#151f21', 'gray.900')}
+            color={'white'}
+            onClick={() => router.push(`/trading`)}
+            px={8}
+            rounded={'md'}>
+            Trade {symbol}
+          </Button>
+        </Flex>
       </Heading>
+
       <Flex
         justifyContent={'center'}
         marginLeft={300}>
