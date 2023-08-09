@@ -1,0 +1,71 @@
+@import '../abstracts/mixins';
+
+.container {
+  margin: 1.5em;
+
+  h1 {
+    padding-bottom: 1rem;
+  }
+
+  .searchWrapper {
+    padding-bottom: 30%;
+  }
+
+  #chart {
+    height: 40vh !important;
+  }
+}
+
+@include geq(400px) {
+  .container {
+    .searchWrapper {
+      padding-bottom: 25%;
+    }
+
+    #chart {
+      height: 50vh !important;
+    }
+  }
+}
+
+@include geq(500px) {
+  .container {
+    .searchWrapper {
+      padding-bottom: 20%;
+    }
+
+    #chart {
+      height: 60vh !important;
+    }
+  }
+}
+
+@include geq(600px) {
+  .container > .searchWrapper {
+    padding-bottom: 15%;
+  }
+}
+
+@include geq(800px) {
+  .container {
+    .searchWrapper {
+      padding-bottom: 10%;
+    }
+
+    #chart {
+      height: 70vh !important;
+    }
+  }
+}
+
+@include geq(1000px) {
+  .container > .searchWrapper {
+    padding-bottom: 7%;
+  }
+}
+
+@include geq(1200px) {
+  .container > .searchWrapper {
+    padding-bottom: 5%;
+  }
+}

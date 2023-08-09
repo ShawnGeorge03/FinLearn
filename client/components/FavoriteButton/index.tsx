@@ -5,7 +5,7 @@ import { IconButton } from '@chakra-ui/react';
 
 interface FavoriteButtonProps {
   color: string;
-  onClickButton: any;
+  onClickButton?: any;
   size: 'sm' | 'md' | 'lg';
 }
 

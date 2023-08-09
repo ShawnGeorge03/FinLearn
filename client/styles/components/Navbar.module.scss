@@ -1,7 +1,16 @@
-@import '../abstracts/variables';
 @import '../abstracts/mixins';
 
-.logo {
-  height: 5vh;
-  margin: 2vh auto;
+.logoWrapper {
+  width: fit-content;
+
+  .logo {
+    height: 5vh;
+    margin: 2vh auto;
+  }
+}
+
+@include geq(660px) {
+  .icon {
+    display: none !important;
+  }
 }

@@ -11,6 +11,10 @@ const theme = extendTheme({
       blue: '#4880C8',
     },
   },
+  font: {
+    heading: `'Josefin Sans', sans-serif`,
+    body: `'Josefin Sans', sans-serif`,
+  },
 });
 
 export default theme;

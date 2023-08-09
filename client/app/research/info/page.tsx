@@ -1,19 +1,20 @@
 'use client';
-
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  useColorModeValue,
-} from '@chakra-ui/react';
+import { Box, Button, Flex, Heading, Link } from '@chakra-ui/react';
 import { useRouter } from 'next/navigation';
-import {
-  AdvancedRealTimeChart,
-  CompanyProfile,
-} from 'react-ts-tradingview-widgets';
+import { CompanyProfile, CopyrightStyles } from 'react-ts-tradingview-widgets';
 
 import SymbolSearch from '@/components/SymbolSearch';
+
+import styles from '@/styles/pages/ResearchMoreInfo.module.scss';
+
+import dynamic from 'next/dynamic';
+const AdvancedRealTimeChartNoSSR = dynamic(
+  () =>
+    import('react-ts-tradingview-widgets').then((w) => w.AdvancedRealTimeChart),
+  {
+    ssr: false,
+  },
+);
 
 type ResearchInfoProps = {
   searchParams: {
@@ -21,11 +22,14 @@ type ResearchInfoProps = {
   };
 };
 
+const tradingViewStyles: CopyrightStyles = { parent: { display: 'none' } };
+
 export default function ResearchInfoPage({ searchParams }: ResearchInfoProps) {
   const router = useRouter();
 
   const parseSymbol = (tvwidgetsymbol: string) => {
     try {
+      if (tvwidgetsymbol.length === 0) throw new Error();
       return !tvwidgetsymbol.includes(':')
         ? tvwidgetsymbol
         : tvwidgetsymbol.split(':')[1];
@@ -40,50 +44,49 @@ export default function ResearchInfoPage({ searchParams }: ResearchInfoProps) {
 
   const symbol = parseSymbol(searchParams.tvwidgetsymbol);
 
+  const { container, searchWrapper, chart } = styles;
+
   return (
-    <>
-      <Heading
-        marginLeft={'10px'}
-        marginTop={10}>
-        {symbol}
-        <Flex
-          alignItems="right"
-          h="10vh"
-          justifyContent="flex-end"
-          marginRight={8}>
+    <div className={container}>
+      <Flex
+        alignContent={'center'}
+        justifyContent={'space-between'}
+        marginBottom={5}>
+        <Heading
+          as="h1"
+          size="xl">
+          {symbol}
+        </Heading>
+        <Link href={`/trading?symbol=${symbol}`}>
           <Button
-            _hover={{
-              transform: 'translateY(-2px)',
-              boxShadow: 'lg',
-            }}
-            bg={useColorModeValue('#151f21', 'gray.900')}
-            color={'white'}
-            onClick={() => router.push(`/trading`)}
+            colorScheme="blue"
             px={8}
-            rounded={'md'}>
+            rounded="md">
             Trade {symbol}
           </Button>
-        </Flex>
-      </Heading>
-
-      <Flex
-        justifyContent={'center'}
-        marginLeft={300}>
-        <Box>
-          <SymbolSearch
-            callback={(symbol: string) =>
-              router.push(`/research/info?tvwidgetsymbol=${symbol}`)
-            }
-          />
-        </Box>
+        </Link>
       </Flex>
-      <Box marginTop={100}>
-        <AdvancedRealTimeChart symbol={symbol}></AdvancedRealTimeChart>
+      <div className={searchWrapper}>
+        <SymbolSearch
+          callback={(symbol: string) =>
+            router.push(`/research/info?tvwidgetsymbol=${symbol}`)
+          }
+        />
+      </div>
+      <Box marginBottom={10}>
+        <AdvancedRealTimeChartNoSSR
+          autosize
+          container_id={chart}
+          copyrightStyles={tradingViewStyles}
+          symbol={symbol}
+        />
       </Box>
       <CompanyProfile
+        copyrightStyles={tradingViewStyles}
         height={400}
         symbol={symbol}
-        width="100%"></CompanyProfile>
-    </>
+        width="100%"
+      />
+    </div>
   );
 }

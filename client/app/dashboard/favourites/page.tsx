@@ -68,7 +68,7 @@ const FavouritesPage = () => {
           Favourites Page
         </Heading>
         <Flex
-          alignItems={'center'}
+          alignItems={'baseline'}
           direction={'row'}
           justifyContent={'center'}
           mr={10}>
@@ -80,7 +80,6 @@ const FavouritesPage = () => {
               marginBottom={'20px'}
               marginTop={'10px'}
               minWidth="max-content">
-              {' '}
               <MenuButton
                 as={Button}
                 rightIcon={<ChevronDownIcon />}
@@ -115,6 +114,7 @@ const FavouritesPage = () => {
                       <Tag
                         colorScheme="teal"
                         height={'10px'}
+                        minWidth="unset"
                         size={'md'}>
                         {item.article.contentType.toUpperCase()}
                       </Tag>
@@ -148,6 +148,7 @@ const FavouritesPage = () => {
                       <Tag
                         colorScheme="blue"
                         height={'10px'}
+                        minWidth="unset"
                         size={'md'}>
                         {item.video.contentType.toUpperCase()}
                       </Tag>

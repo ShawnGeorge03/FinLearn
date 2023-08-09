@@ -60,7 +60,6 @@ export default function TopStocks() {
           marginBottom={'20px'}
           marginTop={'10px'}
           minWidth="max-content">
-          {' '}
           <Heading
             mb="1"
             mt="3"

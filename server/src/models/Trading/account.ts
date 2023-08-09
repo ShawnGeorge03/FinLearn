@@ -24,6 +24,7 @@ const AccountSchema = new Schema<Account>(
     value: {
       // Value is based on Cash + Present Returns from Holdings
       type: Number,
+      default: 100000,
       required: true,
     },
   },

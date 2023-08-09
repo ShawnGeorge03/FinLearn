@@ -29,7 +29,6 @@ import {
   Td,
   Text,
   Tr,
-  useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import { useAuth } from '@clerk/nextjs';
@@ -38,6 +37,12 @@ import { CopyrightStyles, MiniChart } from 'react-ts-tradingview-widgets';
 
 import useWindowWidth from '@/hooks/useWindowWidth';
 import { ErrorResponse } from '@/types/base';
+import {
+  AccountInfo,
+  SymbolPrice,
+  TradeOrderResponse,
+  TradingProps,
+} from '@/types/trading';
 
 import styles from '@/styles/pages/Trading.module.scss';
 
@@ -48,23 +53,7 @@ const USDollar = new Intl.NumberFormat('en-US', {
 
 const tradingViewStyles: CopyrightStyles = { parent: { display: 'none' } };
 
-type AccountInfo = {
-  cash: number;
-  value: number;
-};
-
-type SymbolPrice = {
-  symbol: string;
-  price: string;
-};
-
-type TradeOrderResponse = {
-  cash: number;
-  symbol: string;
-  price: number;
-};
-
-export default function TradingPage() {
+export default function TradingPage({ searchParams }: TradingProps) {
   const { userId } = useAuth();
 
   // Used for Preview Modal
@@ -72,8 +61,8 @@ export default function TradingPage() {
 
   const [accInfo, setAccInfo] = useState<AccountInfo>();
   const [action, setAction] = useState<string>('buy');
-  const [quantity, setQuantity] = useState<number>();
-  const [symbol, setSymbol] = useState<string>();
+  const [quantity, setQuantity] = useState<number | undefined>(0);
+  const [symbol, setSymbol] = useState<string | undefined>(searchParams.symbol);
   const [price, setPrice] = useState<number>();
 
   const windowWidth = useWindowWidth();
@@ -115,7 +104,7 @@ export default function TradingPage() {
     }
   };
 
-  const getPrice = async () => {
+  const getPrice = async (symbol: string) => {
     try {
       const response: Response = await fetch(
         `http://localhost:4000/trading/symbolPrice?symbol=${symbol}`,
@@ -218,7 +207,9 @@ export default function TradingPage() {
     getAccountInfo();
   }, []);
 
-  const spacing = useBreakpointValue({ base: '20%', md: '51%' });
+  useEffect(() => {
+    if (symbol) getPrice(symbol);
+  }, [symbol]);
 
   if (!accInfo)
     return (
@@ -239,17 +230,16 @@ export default function TradingPage() {
     if (action === 'sell') return await getMaxStocks();
   };
 
-  const submitOrder = async () => {
-    onClose();
-    if (action === 'buy') await buyStocks();
-    if (action === 'sell') await sellStocks();
+  const reset = () => {
+    setAction('buy');
+    setQuantity(0);
+    setSymbol(undefined);
+    setPrice(undefined);
   };
 
   return (
     <div className={container}>
-      <HStack
-        justifyContent={'space-between'}
-        spacing={spacing}>
+      <HStack justifyContent={'space-between'}>
         <Heading
           as="h1"
           size="xl">
@@ -266,8 +256,8 @@ export default function TradingPage() {
       <div className={searchWrapper}>
         <SymbolSearch
           callback={(symbol: string) => {
+            reset();
             setSymbol(symbol);
-            getPrice();
           }}
         />
         <div className={accountInfo}>
@@ -349,17 +339,13 @@ export default function TradingPage() {
             spacing="25">
             <Button
               colorScheme="red"
-              onClick={() => {
-                setAction('buy');
-                setQuantity(undefined);
-                setSymbol(undefined);
-                setPrice(undefined);
-              }}
+              onClick={() => reset()}
               size={'lg'}>
               Cancel
             </Button>
             <Button
               colorScheme="blue"
+              isDisabled={!symbol || quantity === 0}
               onClick={() => onOpen()}
               size={'lg'}>
               Preview Order
@@ -407,7 +393,6 @@ export default function TradingPage() {
               </Table>
             </TableContainer>
           </ModalBody>
-
           <ModalFooter>
             <Button
               onClick={onClose}
@@ -418,7 +403,9 @@ export default function TradingPage() {
               colorScheme="blue"
               mr={3}
               onClick={async () => {
-                await submitOrder();
+                onClose();
+                if (action === 'buy') await buyStocks();
+                if (action === 'sell') await sellStocks();
               }}>
               Submit Order
             </Button>

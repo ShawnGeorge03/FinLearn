@@ -177,7 +177,7 @@ export const updateVideoProgress = async (req: Request, res: Response) => {
 
   /* Find relevant information about parentUnit and parentCourse and sanity checking */
   const parentUnit = await modelUnit.findOne({
-    content: { $all: [video._id.toString()] },
+    content: { $all: [video._id] },
   });
 
   if (!parentUnit)

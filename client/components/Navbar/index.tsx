@@ -3,6 +3,8 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Button,
+  ButtonGroup,
   Flex,
   HStack,
   IconButton,
@@ -11,14 +13,11 @@ import {
   Stack,
   useDisclosure,
 } from '@chakra-ui/react';
-import NavLink from './NavLink';
+import { SignInButton, SignUpButton, UserButton, useAuth } from '@clerk/nextjs';
 
-import logoImg from '@/public/Logo_Transparent_Dark.png';
-import style from '@/styles/components/Navbar.module.scss';
-import NextLink from 'next/link';
-import UserAvatar from './UserAvatar';
-
-import { useAuth } from '@clerk/nextjs';
+import useWindowWidth from '@/hooks/useWindowWidth';
+import logoImg from '@/public/Logo_Transperant_light.png';
+import styles from '@/styles/components/Navbar.module.scss';
 
 const navLinks = [
   {
@@ -37,76 +36,122 @@ const navLinks = [
     name: 'Trading',
     href: '/trading',
   },
+  {
+    name: 'Favourites',
+    href: '/dashboard/favourites',
+  },
 ];
+
+type NavLinkProps = {
+  href: string;
+  name: string;
+};
+
+const NavLink = ({ href, name }: NavLinkProps) => (
+  <Link
+    _hover={{ textDecoration: 'none', bg: 'brand.grey' }}
+    color={'white'}
+    href={href}
+    px={2}
+    py={1}
+    rounded={'md'}>
+    {name}
+  </Link>
+);
+
+const NavButtons = () => (
+  <ButtonGroup gap="2">
+    <SignUpButton>
+      <Button
+        colorScheme="linkedin"
+        variant="solid">
+        Sign Up
+      </Button>
+    </SignUpButton>
+    <SignInButton>
+      <Button
+        colorScheme="linkedin"
+        variant="solid">
+        Sign In
+      </Button>
+    </SignInButton>
+  </ButtonGroup>
+);
 
 const Navbar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isSignedIn } = useAuth();
 
+  const { icon, logoWrapper, logo } = styles;
+
+  const windowWidth = useWindowWidth();
+
   return (
     <Box
-      bg="brand.gray"
-      px={4}>
+      bg="black"
+      px={2}>
       <Flex
         alignItems={'center'}
         h={16}
         justifyContent={'space-between'}>
         <IconButton
+          _hover={{
+            backgroundColor: 'transparent',
+          }}
           aria-label={'Open Menu'}
-          display={{ md: 'none' }}
+          bg={'transparent'}
+          className={icon}
           icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
           onClick={isOpen ? onClose : onOpen}
-          size={'md'}
         />
-        <HStack
-          alignItems={'center'}
-          spacing={8}>
-          <Link
-            as={NextLink}
-            href="/">
-            <Image
-              alt="Logo"
-              className={style.logo}
-              src={logoImg.src}
-            />
-          </Link>
-          {isSignedIn && (
-            <HStack
-              as={'nav'}
-              display={{ base: 'none', md: 'flex' }}
-              spacing={4}>
-              {navLinks.map((link) => (
+        <Link
+          className={logoWrapper}
+          href={'/'}>
+          <Image
+            alt="Logo"
+            className={logo}
+            fit="contain"
+            loading="eager"
+            paddingLeft={3}
+            src={logoImg.src}
+          />
+        </Link>
+        <Box paddingRight={3}>
+          {!isSignedIn && windowWidth > 660 && <NavButtons />}
+          {isSignedIn && windowWidth > 660 && (
+            <HStack>
+              {navLinks.map(({ name, href }, idx) => (
                 <NavLink
-                  href={link.href}
-                  key={link.name}
-                  name={link.name}
+                  href={href}
+                  key={idx}
+                  name={name}
                 />
               ))}
+              <UserButton />
             </HStack>
           )}
-        </HStack>
-        <Flex alignItems={'center'}>
-          <UserAvatar />
-        </Flex>
+        </Box>
       </Flex>
-
-      {isOpen ? (
-        <Box
-          display={{ md: 'none' }}
-          pb={4}>
+      {isOpen && windowWidth < 660 && (
+        <Box pb={4}>
           <Stack
-            as={'nav'}
+            alignItems="center"
+            as="nav"
             spacing={4}>
-            {navLinks.map((link) => (
-              <NavLink
-                href={link.href}
-                key={link.name}
-                name={link.name}
-              />
-            ))}
+            {isSignedIn ? (
+              navLinks.map(({ name, href }, idx) => (
+                <NavLink
+                  href={href}
+                  key={idx}
+                  name={name}
+                />
+              ))
+            ) : (
+              <NavButtons />
+            )}
           </Stack>
         </Box>
-      ) : null}
+      )}
     </Box>
   );
 };

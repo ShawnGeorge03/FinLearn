@@ -5,6 +5,9 @@ import { MongoServerError } from 'mongodb';
 import { WebhookEvent } from '@clerk/clerk-sdk-node';
 
 import modelUser from '../../models/Account/user';
+import modelAccount from '../../models/Trading/account';
+import modelPortfolio from '../../models/Trading/portfolio';
+
 import { createError } from '../../utils/error';
 import { validateUserID } from '../../utils/validate';
 
@@ -24,7 +27,12 @@ export const createUser = async (req: Request, res: Response) => {
       const { status, error } = validateUserID(data.id);
       if (!status) return res.status(404).json(error);
 
-      await modelUser.create({ userID: data.id });
+      const user = await modelUser.create({ userID: data.id });
+
+      // Create Trading Account & Portfolio
+      await modelAccount.create({ userID: user.id });
+      await modelPortfolio.create({ userID: user.id });
+
       return res.status(201).json({ message: 'User created successfully!' });
     }
     res
