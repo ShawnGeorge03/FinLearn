@@ -65,8 +65,7 @@ const highlights: Highlights[] = [
 export default function Home() {
   return (
     <ChakraProvider theme={theme}>
-      <Container
-        maxW="container.lg">
+      <Container maxW="container.lg">
         <Center
           minHeight="80vh"
           p={4}>
@@ -106,32 +105,34 @@ export default function Home() {
           </VStack>
         </Center>
       </Container>
-      <div style={{background: "black"}}>
-      <Container
-      maxW="container.lg"
-      py={[8, 28]}
-
-    >
-      <SimpleGrid
-        minChildWidth="300px"
-        spacingX={10}
-        spacingY={20}>
-        {highlights.map(({ icon, title, description }, idx: number) => (
-          <Box
-            key={idx}
-            p={4}
-            rounded="md">
-            <Text  fontSize="4xl">{icon}</Text>
-            <Text  color="white"fontWeight={500}>{title}</Text>
-            <Text
-              color="gray.500"
-              mt={4}>
-              {description}
-            </Text>
-          </Box>
-        ))}
-      </SimpleGrid>
-    </Container>
+      <div style={{ background: 'black' }}>
+        <Container
+          maxW="container.lg"
+          py={[8, 28]}>
+          <SimpleGrid
+            minChildWidth="300px"
+            spacingX={10}
+            spacingY={20}>
+            {highlights.map(({ icon, title, description }, idx: number) => (
+              <Box
+                key={idx}
+                p={4}
+                rounded="md">
+                <Text fontSize="4xl">{icon}</Text>
+                <Text
+                  color="white"
+                  fontWeight={500}>
+                  {title}
+                </Text>
+                <Text
+                  color="gray.500"
+                  mt={4}>
+                  {description}
+                </Text>
+              </Box>
+            ))}
+          </SimpleGrid>
+        </Container>
       </div>
     </ChakraProvider>
   );

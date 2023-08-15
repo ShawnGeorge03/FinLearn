@@ -144,7 +144,7 @@ Your Mark: 5
 
 Your Mark: ~~2~~ 0
 
-> Squash commit for sprint4, but commit description wasn't clear on what tickets were squashed 
+> Squash commit for sprint4, but commit description wasn't clear on what tickets were squashed
 
 - Tasks Distribution (max 3 marks)
 
