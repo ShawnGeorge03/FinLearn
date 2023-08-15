@@ -1,4 +1,4 @@
-# Sprint 2 Marking Scheme
+# Sprint 3 Marking Scheme
 
 _(Convention: N=sprint number, ex: sprintN.md means sprint2.md for sprint 2, and SR(N-1)md means SR1.md for sprint 2, that is Sprint Retrospective for Sprint 1, to be hold during planning meeting at the beginning of Sprint 2)_
 
@@ -60,7 +60,9 @@ Daily Stand-ups Total Mark: 10 / 10
   - 1 mark = one or more Sprint 1 stories are not recorded Jira, or not estimated, or nor broken into tasks, or at least one task not assigned, or at least one team member unassigned a task
   - 0 marks = the majority of Sprint 1 stories not recorded in Jira or not estimated, or nor broken into tasks, or tasks not assigned, or team members unassigned a task
 
-  Your Mark: 2
+  Your Mark: ~~2~~ 0
+
+> None of the completed stories had subtasks: 53, 36, 37, 33, & 34
 
 - Estimated (max 2 marks)
 
@@ -86,7 +88,7 @@ Daily Stand-ups Total Mark: 10 / 10
 
   Your Mark: 2
 
-User Stories Total Mark: 10 / 10
+User Stories Total Mark: ~~10~~ 8 / 10
 
 ---
 
@@ -138,7 +140,9 @@ Your Mark: 5
   - 1 mark = one or more commit messages do not begin with the ticket number of the task followed by a short description of commit changes
   - 0 marks = majority of commit message do not begin with the ticket number of the task followed by a short description of commit changes
 
-Your Mark: 2
+Your Mark: ~~2~~ 0
+
+> Squash commit for sprint3, but commit description wasn't clear on what tickets were squashed 
 
 - Tasks Distribution (max 3 marks)
 
@@ -170,7 +174,7 @@ Your Mark: 2
   - 1 mark = diagram present, but no critical path or explanations provided, or explanations are not adequate.
   - 0 marks = document not available or not containing a valid diagram
 
-Tracking on JIRA Total Mark: 24 / 24
+Tracking on JIRA Total Mark: ~~24~~ 22 / 24
 
 ---
 
@@ -263,4 +267,4 @@ Your Mark: 14 / 14
 
 ## Total Mark
 
-91 / 95
+~~91~~ 87 / 95 (remarked)

@@ -60,7 +60,9 @@ Daily Stand-ups Total Mark: 10 / 10
   - 1 mark = one or more Sprint 1 stories are not recorded Jira, or not estimated, or nor broken into tasks, or at least one task not assigned, or at least one team member unassigned a task
   - 0 marks = the majority of Sprint 1 stories not recorded in Jira or not estimated, or nor broken into tasks, or tasks not assigned, or team members unassigned a task
 
-  Your Mark: 2
+  Your Mark: ~~2~~ 0
+
+> All are missing subtasks
 
 - Estimated (max 2 marks)
 
@@ -84,9 +86,11 @@ Daily Stand-ups Total Mark: 10 / 10
   - 1 mark = one or more Sprint 1 stories do not have clearly defined or testable acceptance criteria
   - 0 marks = the majority of the Sprint1 stories do not have clearly defined or testable acceptance criteria
 
-  Your Mark: 2
+  Your Mark: ~~2~~ 0
 
-User Stories Total Mark: 10 / 10
+> FIN-128, 35, 19, 21, 22, 24, 25 missing AC
+
+User Stories Total Mark: ~~10~~ 6 / 10
 
 ---
 
@@ -138,7 +142,9 @@ Your Mark: 5
   - 1 mark = one or more commit messages do not begin with the ticket number of the task followed by a short description of commit changes
   - 0 marks = majority of commit message do not begin with the ticket number of the task followed by a short description of commit changes
 
-Your Mark: 2
+Your Mark: ~~2~~ 0
+
+> Squash commit for sprint4, but commit description wasn't clear on what tickets were squashed 
 
 - Tasks Distribution (max 3 marks)
 
@@ -170,7 +176,7 @@ Your Mark: 2
   - 1 mark = diagram present, but no critical path or explanations provided, or explanations are not adequate.
   - 0 marks = document not available or not containing a valid diagram
 
-Tracking on JIRA Total Mark: 24 / 24
+Tracking on JIRA Total Mark: ~~24~~ 22 / 24
 
 ---
 
@@ -263,4 +269,4 @@ Your Mark: 14 / 14
 
 ## Total Mark
 
-91 / 95
+~~91~~ 87 / 95 (remarked)
