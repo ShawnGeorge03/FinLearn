@@ -1,5 +1,5 @@
 name: Linting Commits
-on: [pull_request]
+on: workflow_dispatch
 env:
   NODE_VERSION: 18
 jobs:
