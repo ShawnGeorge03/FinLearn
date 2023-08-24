@@ -1,6 +1,6 @@
 {
   "name": "finlearn",
-  "version": "0.17.0",
+  "version": "0.22.7",
   "description": "FinLearn Packages",
   "license": "ISC",
   "workspaces": [
