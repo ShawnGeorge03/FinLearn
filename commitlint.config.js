@@ -5,9 +5,4 @@ module.exports = {
     'body-case': [1, 'always', 'start-case'],
     'references-empty': [1, 'never'],
   },
-  parserPreset: {
-    parserOpts: {
-      issuePrefixes: ['FIN-'],
-    },
-  },
 };

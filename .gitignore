@@ -55,3 +55,12 @@ pids
 
 # Typescript Build
 build
+
+# Coverage
+server/coverage/
+
+# Jest Results
+server/pre-build-tests.html
+
+# Newman Reports
+server/newman/reports/*

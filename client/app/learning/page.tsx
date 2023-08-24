@@ -41,7 +41,7 @@ export default function LearningPage() {
       if (searchTerm.length)
         try {
           const response: Response = await fetch(
-            `http://localhost:4000/searchAutoComplete?searchText=${searchTerm}`,
+            `${process.env.NEXT_PUBLIC_API_URL}/searchAutoComplete?searchText=${searchTerm}`,
           );
           const searchAutoComplete: any = await response.json();
           setAutoComplete(searchAutoComplete);
@@ -62,7 +62,7 @@ export default function LearningPage() {
       if (!searchTerm.length || !validationRegex.test(searchTerm)) getCourses();
       else {
         const response: Response = await fetch(
-          `http://localhost:4000/search?searchText=${searchTerm}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/search?searchText=${searchTerm}`,
         );
         const jsonData: any = await response.json();
         if (Object.keys(jsonData).length !== 0) setCourses(jsonData);
@@ -76,7 +76,9 @@ export default function LearningPage() {
   const getCourses = async () => {
     try {
       // update to better promise handling
-      const response: Response = await fetch('http://localhost:4000/courses');
+      const response: Response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/courses`,
+      );
       const jsonData: Course[] = await response.json();
 
       setCourses(jsonData);

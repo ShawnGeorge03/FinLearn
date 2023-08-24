@@ -1,0 +1,7 @@
+.next
+.dockerignore
+.env
+.eslintrc.json
+Dockerfile
+README.md
+service.yaml

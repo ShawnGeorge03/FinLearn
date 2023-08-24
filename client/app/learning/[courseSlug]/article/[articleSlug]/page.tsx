@@ -82,7 +82,7 @@ const ArticleList = ({ params }: ArticleProps) => {
   const getCourseWithUnits = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4000/units?courseSlug=${params?.courseSlug}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/units?courseSlug=${params?.courseSlug}`,
       );
       if (response.ok) {
         const data: CourseWithUnits = await response.json();
@@ -99,7 +99,7 @@ const ArticleList = ({ params }: ArticleProps) => {
   const getArticle = async () => {
     try {
       const response: Response = await fetch(
-        `http://localhost:4000/article?articleSlug=${params.articleSlug}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/article?articleSlug=${params.articleSlug}`,
       );
       if (response.ok) {
         const data: Article = await response.json();
@@ -240,7 +240,6 @@ const ArticleList = ({ params }: ArticleProps) => {
             </Box>
           </WrapItem>
         </Wrap>
-
         <VStack
           alignItems="flex-start"
           paddingTop="20px"

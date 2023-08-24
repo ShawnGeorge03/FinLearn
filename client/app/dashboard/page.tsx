@@ -40,7 +40,7 @@ const DashboardPage = () => {
     try {
       /* set users courses*/
       const userCoursesResponse: Response = await fetch(
-        `http://localhost:4000/learningProgress?userID=${userId}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/learningProgress?userID=${userId}`,
       );
       let loadedUserCourses: Course[] = [];
       let loadedUserUnits: UnitWithProgress[] = [];
@@ -62,7 +62,7 @@ const DashboardPage = () => {
 
       /* set explore courses*/
       const exploreCoursesResponse: Response = await fetch(
-        'http://localhost:4000/courses',
+        `${process.env.NEXT_PUBLIC_API_URL}/courses`,
       );
       const exploreCoursesData: Course[] = await exploreCoursesResponse.json();
       const filteredCourses = exploreCoursesData.filter(
@@ -89,7 +89,7 @@ const DashboardPage = () => {
     if (!selectedCourse) return;
 
     try {
-      const url = `http://localhost:4000/units?courseSlug=${selectedCourse?.slug}`;
+      const url = `${process.env.NEXT_PUBLIC_API_URL}/units?courseSlug=${selectedCourse?.slug}`;
       const response = await fetch(url);
       const data: CourseWithUnits = await response.json();
       setUnits(data.units);

@@ -7,8 +7,7 @@
   "editor.inlineSuggest.enabled": true,
   "editor.suggestSelection": "first",
   "editor.codeActionsOnSave": {
-    "source.organizeImports": true,
-    "source.fixAll": true
+    "source.organizeImports": true
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 5,
@@ -20,5 +19,7 @@
   "conventionalCommits.promptScopes": false,
   "conventionalCommits.emojiFormat": "emoji",
   "conventionalCommits.autoCommit": false,
-  "conventionalCommits.promptCI": false
+  "conventionalCommits.promptBody": false,
+  "conventionalCommits.promptCI": false,
+  "conventionalCommits.promptFooter": false
 }

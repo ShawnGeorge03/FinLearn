@@ -1,4 +1,4 @@
-import { connect } from 'mongoose';
+import { connect, connection } from 'mongoose';
 import { load } from 'ts-dotenv';
 
 /**
@@ -10,8 +10,17 @@ export const connectDB = async () => {
   const { MONGO_URI } = load({ MONGO_URI: String });
   try {
     await connect(MONGO_URI, { dbName: 'mock' });
-    console.info('MongoDB is connected 🟢');
+    if (process.env.NODE_ENV === 'development')
+      console.info('MongoDB is connected 🟢');
   } catch (err) {
     console.error('MongoDB is not connected 🔴 \n', err);
+  }
+};
+
+export const disconnectDB = async () => {
+  try {
+    await connection.close();
+  } catch (error) {
+    console.error('MongoDB Disconnection Error 🔴');
   }
 };

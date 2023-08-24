@@ -1,7 +1,7 @@
 export {
   getArticleBySlug,
   getFavouriteArticles,
-  toggleFavoriteArticle,
+  toggleFavoriteArticle
 } from './article';
 export { getAllCourses } from './courses';
 export { getLearningProgress } from './dashboard';
@@ -12,5 +12,5 @@ export {
   getVideoBySlug,
   getVideoProgressBySlug,
   toggleFavoriteVideo,
-  updateVideoProgress,
+  updateVideoProgress
 } from './video';

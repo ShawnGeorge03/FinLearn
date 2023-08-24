@@ -1,0 +1,12 @@
+build
+coverage
+newman
+test
+.dockerignore
+.env
+.eslintrc.json
+Dockerfile
+jest.config.json
+nodemon.json
+README.md
+service.yaml
